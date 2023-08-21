@@ -150,7 +150,7 @@ function ProductMatch(props) {
                     target="_blank"
                   >
                     {evIsCheaper ? (
-                      <span className="best-price-unavailable">{`${formattedBestPrice}`}</span>
+                      <span className="best-price-unavailable">{formattedBestPrice}</span>
                     ) : null}
                     Out of Stock
                   </a>

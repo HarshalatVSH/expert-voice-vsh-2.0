@@ -145,7 +145,7 @@ function Inline() {
             >
               <i className="exp-ux-bolt exp-ux-small" />
               {evIsCheaper ? (
-                <span className="best-price-unavailable">{`${formattedBestPrice}`}</span>
+                <span className="best-price-unavailable">{formattedBestPrice}</span>
               ) : null}
               Out of Stock
             </a>
