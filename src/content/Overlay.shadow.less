@@ -1,0 +1,405 @@
+@import (reference) '~exp-core-style/less/core';
+
+// Import core icons definitions
+@import '~exp-core-style/less/utilities/experticity-ux-icons';
+@import 'Content.shadow.less';
+
+// Popup Toggle Button
+.toggle-button {
+  --bg-color: @color-white;
+  --bg-hover-color: @color-white;
+  --text-color: @color-mediumGray-1;
+  --text-hover-color: @color-darkGray-2;
+
+  align-items: center;
+  background-color: var(--bg-color);
+  border: none;
+  border-radius: 3px 0 0 3px;
+  box-shadow: 0 2px 11px rgba(0, 0, 0, 0.18);
+  color: var(--text-color);
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  position: fixed;
+  outline: none;
+  right: -60px; // Extra to cover the box-shadow spread
+  top: 250px;
+  transition: background-color 50ms ease-in, color 50ms ease-in, right 150ms ease-out;
+  width: 48px;
+  z-index: 2147483646; // to the max!
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &.visible {
+    right: 0;
+  }
+
+  &.rewarded {
+    --bg-color: @color-primary;
+    --bg-hover-color: @color-primary-dark;
+    --text-color: @color-white;
+    --text-hover-color: @color-white;
+  }
+
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: var(--bg-hover-color);
+    color: var(--text-hover-color);
+  }
+}
+
+// Popup Modal Styles
+#popup {
+  background-color: @color-white;
+  border-radius: 3px;
+  .box-shadow();
+  position: fixed;
+  right: 12px;
+  top: 12px;
+  width: 300px;
+  z-index: 2147483647;
+}
+
+.panel-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+
+  &:not(.empty) {
+    border-bottom: 1px solid @color-lightGray-1;
+  }
+
+  .back-button {
+    margin-right: 6px;
+
+    > i {
+      display: inline-block;
+      transform: rotate(180deg);
+    }
+  }
+
+  .back-button,
+  .close-button {
+    > i {
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .ev-icon {
+    height: 18px;
+    width: 18px;
+  }
+
+  .title-text {
+    color: @font-color;
+    font-weight: @font-weight-semibold;
+    margin: 0 6px;
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+}
+
+.panel-body {
+  padding: 18px;
+  text-align: center;
+}
+
+.ev-logo {
+  color: @color-primary;
+}
+
+.match-details {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 18px;
+}
+
+.match-image {
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.review-summary {
+  margin-top: 18px;
+}
+
+.subtext {
+  margin-top: 18px;
+}
+
+.brand-link, .product-link {
+  margin: 18px 0;
+}
+
+.brand-products-link {
+  margin: 6px 0 18px 0;
+}
+
+.sample-panel {
+  background-color: @color-lightGray-2;
+  border-radius: 3px;
+  margin: 24px 0;
+  padding: 12px;
+}
+
+.sample-image {
+  margin-bottom: 12px;
+}
+
+.report-issue {
+  margin-top: 18px;
+}
+
+.btn-login {
+  margin: 12px 0;
+}
+
+.btn-logout,
+.btn-report {
+  margin-left: 6px;
+}
+
+.sign-up-link {
+  margin-left: 3px;
+}
+
+.form-error {
+  margin-bottom: 18px;
+}
+
+// Login form styles
+.login-form {
+  .form-control {
+    margin-bottom: 24px;
+  }
+}
+
+// Report form styles
+.report-form {
+  text-align: left;
+
+  label {
+    display: block;
+    font-weight: @font-weight-semibold;
+    margin-bottom: 6px;
+  }
+
+  .form-control {
+    margin-bottom: 24px;
+  }
+
+  .radio-input {
+    align-items: center;
+    display: flex;
+
+    &:not(:first-child) {
+      margin-top: 12px;
+    }
+
+    input[type="radio"] {
+      align-self: flex-start;
+      flex: 0 0 auto;
+      height: 18px;
+      margin-right: 8px;
+      width: 18px;
+    }
+
+    label {
+      flex: 1 1 auto;
+      font-weight: @font-weight-normal;
+      margin-bottom: 0;
+    }
+  }
+
+  textarea {
+    background: @color-white;
+    border: 1px solid @color-lightGray-1;
+    border-radius: 3px;
+    height: 90px;
+    outline: none;
+    padding: 4px 6px;
+    resize: none;
+    width: 100%;
+
+    &:active,
+    &:focus,
+    &:hover {
+      border-color: @color-mediumGray-3;
+    }
+  }
+}
+
+
+// Report Success Styles
+.report-success {
+  padding-top: 0;
+
+  .confirmation-title {
+    margin: 6px 0 0;
+  }
+
+  .btn {
+    margin-top: 24px;
+  }
+}
+
+
+.badge {
+  border-radius: 6px;
+  font-weight: @font-weight-semibold;
+  height: 22px;
+  text-align: center;
+  width: 22px;
+
+  &-secondary {
+    background-color: @color-lightGray-1;
+  }
+
+  &-success {
+    background-color: @color-success;
+  }
+}
+
+.pill {
+  border-radius: 30px;
+  font-weight: @font-weight-semibold;
+  padding: 3px 16px;
+
+  &-outline {
+    border: 1px solid @color-mediumGray-3;
+    color: @color-mediumGray-1;
+  }
+
+  &-secondary {
+    background-color: @color-lightGray-1;
+  }
+
+  &-success {
+    background-color: @color-success;
+  }
+}
+
+.exp-form {
+  .form-control {
+    position: relative;
+  }
+
+  input[type="password"],
+  input[type="text"] {
+    background: @color-lightGray-3;
+    border: none;
+    border-bottom: 1px solid @color-mediumGray-3;
+    border-radius: 3px 3px 0 0;
+    color: @color-darkGray-1;
+    font-size: inherit;
+    outline: none;
+    padding: 16px 12px 14px;
+    width: 100%;
+
+    &:hover {
+      background: @color-lightGray-2;
+      border-color: @color-mediumGray-1;
+    }
+
+    &:focus {
+      border-color: @color-info;
+      background: @color-lightGray-2;
+    }
+
+    &::placeholder,
+    & + label,
+    &.no-value + label {
+      color: @color-mediumGray-1;
+    }
+
+    & + label {
+      display: none;
+      pointer-events: none;
+      position: absolute;
+      top: 4px;
+    }
+
+    &:not(:placeholder-shown):not(.no-value) {
+      padding: 24px 12px 6px;
+
+      & + label {
+        display: block;
+        font-size: 13px;
+        padding-left: 12px;
+        top: 6px;
+      }
+    }
+
+    &:disabled,
+    &:disabled::placeholder,
+    &:disabled + label,
+    &:disabled ~ .guidance {
+      color: @color-mediumGray-3;
+    }
+
+    &.warning {
+      border-bottom: 1px solid @color-danger;
+
+      &::placeholder,
+      & + label {
+        color: @color-danger;
+      }
+    }
+  }
+
+  .guidance {
+    color: @color-mediumGray-1;
+    font-size: @type-small-text-size;
+    line-height: @type-small-text-line-height;
+    margin-top: 3px;
+    padding-left: 12px;
+    text-align: left;
+
+    &.warning {
+      color: @color-danger;
+    }
+  }
+}
+
+
+// Resets
+* {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+a {
+  border: none;
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  text-decoration: none;
+}
+
+h1 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}

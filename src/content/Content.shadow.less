@@ -1,0 +1,145 @@
+@import (reference) '~exp-core-style/less/core';
+
+// Import core icons definitions
+@import '~exp-core-style/less/utilities/experticity-ux-icons';
+
+// Shadow root styles
+:host {
+  color: @font-color;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', -apple-system, sans-serif;
+  font-size: @font-size;
+  font-weight: @font-weight-normal;
+  line-height: @font-line-height;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.review-summary {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  .small-text {
+    line-height: 19px; // slight tweak for visual alignment with bigger text
+  }
+}
+
+.average-stars {
+  align-items: center;
+  display: inline-flex;
+  margin-right: 8px;
+
+  > i {
+    color: @color-warning;
+    margin-right: 4px;
+  }
+}
+
+// Common Styles
+.type-title {
+  font-size: 18px;
+  font-weight: @font-weight-semibold;
+  line-height: 24px;
+}
+
+.secondary-text {
+  color: @color-darkGray-2;
+}
+
+.tertiary-text {
+  color: @color-mediumGray-1;
+}
+
+.small-text {
+  font-size: @type-small-text-size;
+  font-weight: @font-weight-normal;
+  line-height: @type-small-text-line-height;
+}
+
+.btn {
+  border-radius: 3px;
+  display: block;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: @font-weight-semibold;
+  padding: 12px;
+  text-align: center;
+  width: 100%;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &-gray {
+    background: @color-lightGray-2;
+    color: @color-mediumGray-1;
+
+    &:active,
+    &:focus,
+    &:hover {
+      background: @color-lightGray-1;
+    }
+
+    &:disabled {
+      background: @color-lightGray-3;
+      color: @color-mediumGray-3;
+    }
+  }
+
+  &-outline {
+    background: @color-white;
+    border: 1px solid @color-mediumGray-1;
+    color: @color-mediumGray-1;
+
+    &:active,
+    &:focus,
+    &:hover {
+      border-color: @color-darkGray-2;
+      color: @color-darkGray-2;
+    }
+
+    &:disabled {
+      border-color: @color-mediumGray-3;
+      color: @color-mediumGray-3;
+    }
+  }
+
+  &-primary {
+    background: @color-primary;
+    color: @color-white;
+
+    &:active,
+    &:focus,
+    &:hover {
+      background: @color-primary-dark;
+    }
+
+    &:disabled {
+      background: @color-primary-disabled;
+    }
+  }
+}
+
+.btn-icon {
+  color: @color-mediumGray-1;
+
+  &:active,
+  &:focus,
+  &:hover {
+    color: @font-color;
+  }
+
+  > img {
+    vertical-align: middle;
+  }
+}
+
+.link {
+  text-decoration: underline;
+}
+
+.best-price-unavailable {
+  margin-right: 4px;
+  text-decoration: line-through;
+}

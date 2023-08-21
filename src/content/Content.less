@@ -1,0 +1,41 @@
+@import (reference) '~exp-core-style/less/core';
+
+// Only declare the fonts themselves at the root level.
+// Everything else is being done inside the Shadow DOM
+
+// Experticity UX Icons
+@font-face {
+  font-family: 'Experticity UX';
+  font-style: normal;
+  font-weight: normal;
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/experticity-ux.ttf') format('truetype');
+}
+
+// source-sans-pro-300
+@font-face {
+  font-display: swap;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: @font-weight-light;
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/source-sans-pro-v18-300.ttf') format('truetype');
+}
+
+// source-sans-pro-400
+@font-face {
+  font-display: swap;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: @font-weight-normal;
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/source-sans-pro-v18-400.ttf') format('truetype');
+}
+
+// source-sans-pro-600
+@font-face {
+  font-display: swap;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: @font-weight-semibold;
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/source-sans-pro-v18-600.ttf') format('truetype');
+}
+
+

@@ -1,0 +1,54 @@
+@import (reference) '~exp-core-style/less/core';
+
+.alert {
+  align-items: center;
+  border-radius: 3px;
+  display: flex;
+  padding: 10px 12px;
+
+  .alert-before,
+  .alert-after {
+    align-items: center;
+    color: @color-white;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+  }
+
+  .alert-before {
+    margin-right: 12px;
+  }
+
+  .alert-content {
+    flex: 1 1 auto;
+    font-weight: @font-weight-semibold;
+  }
+
+  .alert-after {
+    margin-left: 12px;
+  }
+
+  &-mini {
+    padding: 4px 6px;
+  }
+
+  &-error {
+    background-color: #D73930; // TODO move to ECS
+    color: @color-white;
+  }
+
+  &-info {
+    background-color: @color-info;
+    color: @color-white;
+  }
+
+  &-success {
+    background-color: @color-success;
+    color: #1D4430; // TODO move to ECS
+  }
+
+  &-warning {
+    background-color: @color-warning;
+    color: #6D5100; // TODO move to ECS
+  }
+}

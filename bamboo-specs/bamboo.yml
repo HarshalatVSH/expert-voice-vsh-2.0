@@ -1,0 +1,68 @@
+---
+version: 2
+plan:
+  project-key: JS
+  key: EV
+  name: ev-shop-plugin
+stages:
+  - Compile:
+      manual: false
+      final: false
+      jobs:
+        - Compile
+Compile:
+  key: CMP
+  tasks:
+    - checkout:
+        force-clean-build: 'true'
+    - any-task:
+        plugin-key: com.atlassian.bamboo.plugins.bamboo-nodejs-plugin:task.builder.npm
+        configuration:
+          isolatedCache: 'false'
+          runtime: Node.js
+          command: install
+    - any-task:
+        plugin-key: com.atlassian.bamboo.plugins.bamboo-nodejs-plugin:task.builder.npm
+        configuration:
+          isolatedCache: 'false'
+          runtime: Node.js
+          command: run build
+    - script:
+        interpreter: BINSH_OR_CMDEXE
+        scripts:
+          - zip -r ev-shop-plugin.zip ./build
+  artifacts:
+    - name: ev-shop-plugin
+      location: '.'
+      pattern: 'ev-shop-plugin.zip'
+      shared: true
+      required: true
+branches:
+  create: for-new-branch
+  delete:
+    after-deleted-days: 30
+    after-inactive-days: 90
+  link-to-jira: true
+notifications: []
+labels: []
+other:
+  concurrent-build-plugin: system-default
+---
+version: 2
+plan:
+  key: JS-EV
+plan-permissions:
+  - groups:
+      - qa
+    roles:
+      - logged-in
+    permissions:
+      - view
+      - edit
+      - build
+      - clone
+      - admin
+  - roles:
+      - anonymous
+    permissions:
+      - view

@@ -1,0 +1,74 @@
+@import (reference) '~exp-core-style/less/core';
+
+// Import core icons definitions
+@import '~exp-core-style/less/utilities/experticity-ux-icons';
+@import 'Content.shadow.less';
+
+#inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 18px 0;
+}
+
+.btn {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  line-height: 14px;
+  padding: 0 18px 0 12px;
+  width: unset;
+
+  .exp-ux-bolt {
+    margin-right: 12px;
+  }
+
+  &-gray:not(:disabled) .exp-ux-bolt {
+    color: @color-mediumGray-2;
+  }
+}
+
+.review-summary {
+  height: 40px;
+}
+
+.link {
+  font-weight: @font-weight-semibold;
+}
+
+.review-prompt > i {
+  color: @color-mediumGray-3;
+  margin-right: 8px;
+}
+
+
+// Resets
+* {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+a {
+  border: none;
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  text-decoration: none;
+}
+
+h1 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
