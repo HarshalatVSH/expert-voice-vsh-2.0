@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable  */
 import React, { useEffect, useState } from 'react';
 
 import { AnalyticEvent, CtaType, MessageType } from '../constants';
@@ -69,7 +69,8 @@ function Inline() {
           target="_blank"
         >
           <div className="average-stars type-title">
-            <i className="exp-ux-starFilled exp-ux-small" />
+            {/* <i className="exp-ux-starFilled exp-ux-small" /> */}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Orange_star.svg/524px-Orange_star.svg.png" style={{height:"18px", position:"relative" , top:"-3px" , marginRight:"2px"}} alt="" />
             {roundedStars}
           </div>
 
@@ -117,7 +118,8 @@ function Inline() {
           }}
           type="button"
         >
-          <i className="exp-ux-bolt exp-ux-small" />
+          {/* <i className="exp-ux-bolt exp-ux-small" /> */}
+          <img src="https://play-lh.googleusercontent.com/dauWPe0lEtHUHijd9tNm6IRsAyG3s6OsmC2COaE0LvlyFBrtpYsU3QuSFPgHEt6dqobX=w240-h480-rw" style={{height : "20px" , marginRight:"7px" , width:"25px"}} alt="" />
           Sign in for discounts
         </button>
       ) : (

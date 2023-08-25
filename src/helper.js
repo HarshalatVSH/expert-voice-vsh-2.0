@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import {
   InlineVariant,
   MessageType,
@@ -26,10 +27,21 @@ export const AUTH_DOMAIN = 'https://www.expertvoice.com';
 
 export const isAuthCookie = (c) => AUTH_DOMAIN.includes(c?.domain)
   && c?.name?.startsWith(AUTH_COOKIE);
-export const getAuthCookie = async () => {
-  const cookies = await chrome.cookies.getAll({ url: AUTH_DOMAIN });
-  return cookies.find((c) => isAuthCookie(c));
-};
+// export const getAuthCookie = async () => {
+//   const cookies = await chrome.cookies.getAll({ url: AUTH_DOMAIN });
+//   return cookies.find((c) => isAuthCookie(c));
+// };  
+
+export function getAuthCookie() {
+  return new Promise(function(resolve, reject) {
+    chrome.cookies.getAll({ url: AUTH_DOMAIN }, function(cookies) {
+      const authCookie = cookies.find(function(c) {
+        return isAuthCookie(c);
+      });
+      resolve(authCookie);
+    });
+  });
+}
 export const isAuthenticated = async () => {
   const c = await getAuthCookie();
   return !!c;
@@ -38,12 +50,26 @@ export const isAuthenticated = async () => {
 // ----------------------------------
 // Cache Helpers
 // ----------------------------------
+// export const getFromCache = async (key, { ttl } = {}) => {
+//   const entries = await chrome.storage.local.get([key]);
+//   const entry = entries?.[key];
+//   return entry?.created && entry?.value
+//     && (!ttl || entry.created + ttl > Date.now()) ? entry.value : null;
+// };
+
 export const getFromCache = async (key, { ttl } = {}) => {
-  const entries = await chrome.storage.local.get([key]);
-  const entry = entries?.[key];
-  return entry?.created && entry?.value
-    && (!ttl || entry.created + ttl > Date.now()) ? entry.value : null;
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get([key], (entries) => {
+      const entry = entries?.[key];
+      if (entry?.created && entry?.value && (!ttl || entry.created + ttl > Date.now())) {
+        resolve(entry.value);
+      } else {
+        resolve(null);
+      }
+    });
+  });
 };
+
 export const getCacheable = async (key, supplier, { reset = false, ttl } = {}) => {
   // Try to pull from storage
   const cached = await getFromCache(key, { ttl });
@@ -147,13 +173,16 @@ export const formatProductName = (value) => (
 // ----------------------------------
 // Context Helpers
 // ----------------------------------
-export const getNotificationType = ({ brand, page, product }, user) => {
+export const getNotificationType = ({ brand , page, product }, user) => {
+  if (!brand) {
+    return null;
+  }
   if (brand?.active) {
     if (!user) {
       return NotificationType.ACTIVE;
     }
 
-    if (brand.rewarded) {
+    if (brand?.rewarded) {
       if (product) {
         if (!product.inStock && product.accessConfirmed) {
           return NotificationType.PASSIVE;

@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import React, { useEffect, useRef, useState } from 'react';
 
 import { AnalyticEvent, MessageType, NotificationType, PopupMode } from '../constants';
@@ -104,7 +105,8 @@ function Overlay() {
           }}
           type="button"
         >
-          <i className="exp-ux-bolt exp-ux-small" />
+          {/* <i className="exp-ux-bolt exp-ux-small" /> */}
+          <img src="https://play-lh.googleusercontent.com/dauWPe0lEtHUHijd9tNm6IRsAyG3s6OsmC2COaE0LvlyFBrtpYsU3QuSFPgHEt6dqobX=w240-h480-rw" style={{height : "20px", marginRight:"7px" , width:"25px"}} alt="" />
         </button>
       ) : null}
 
