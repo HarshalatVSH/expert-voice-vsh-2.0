@@ -35,8 +35,7 @@ function ProductMatch(props) {
           rel="noopener noreferrer"
           target="_blank"
         >
-          {/* <i className="exp-ux-starFilled exp-ux-small" /> */}
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Orange_star.svg/524px-Orange_star.svg.png" style={{height:"18px", position:"relative" , top:"-3px" , marginRight:"2px"}} alt="" />
+          <i className="exp-ux-starFilled exp-ux-small" />
           {roundedStars}
         </a>
         <a

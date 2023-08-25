@@ -9,24 +9,44 @@
     "48": "assets/images/icon48_gray.png",
     "128": "assets/images/icon128_gray.png"
   },
-  "browser_action": {},
-  "content_scripts": [
-    {
-      "matches": ["https://*.amazon.com/*", "https://*.amazon.ca/*"],
-      "exclude_matches": ["https://expertvoice.com/*"],
-      "css": ["content.css"],
-      "js": ["content.min.js"]
-    }
-  ],
-  "background": {
-    "scripts": ["worker.min.js"],
-    "persistent": false
-  },
   "permissions": [
     "activeTab",
     "cookies",
     "storage",
-    "<all_urls>",
-    "browserAction"
-  ]
+    "tabs",
+    "browserAction",
+    "*://*.expertvoice.com/"
+  ],
+  "browser_action": {},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.ca/*"
+      ],
+      "exclude_matches": [
+        "https://expertvoice.com/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "content.min.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "assets/fonts/experticity-ux.ttf",
+    "assets/fonts/source-sans-pro-v18-300.ttf",
+    "assets/fonts/source-sans-pro-v18-400.ttf",
+    "assets/fonts/source-sans-pro-v18-600.ttf",
+    "assets/images/preview.png"
+  ],
+  "background": {
+    "scripts": [
+      "worker.min.js"
+    ],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://expertvoice.com; object-src 'self'"
 }

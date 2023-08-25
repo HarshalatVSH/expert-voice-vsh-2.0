@@ -36,9 +36,7 @@ function LoginForm(props) {
               }}
               type="button"
             >
-              {/* <i className="exp-ux-chevron exp-ux-medium" /> */}             
-              {/* <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 384 512"  style={{marginRight:"7px" , position : "relative" , bottom:"-2px" , color:'#aeb0b2' }}><path d="M380.6 81.7c7.9 15.8 1.5 35-14.3 42.9L103.6 256 366.3 387.4c15.8 7.9 22.2 27.1 14.3 42.9s-27.1 22.2-42.9 14.3l-320-160C6.8 279.2 0 268.1 0 256s6.8-23.2 17.7-28.6l320-160c15.8-7.9 35-1.5 42.9 14.3z"/></svg> */}
-              <img src="https://icons.veryicon.com/png/o/miscellaneous/commonly-used-icon-1/angle-bracket-left.png"  style={{height:"18px" }} alt="" />
+              <i className="exp-ux-chevron exp-ux-medium" />             
             </button>
             <span className="title-text">Sign into ExpertVoice</span>
           </>
@@ -50,9 +48,7 @@ function LoginForm(props) {
             onClick={props.onClose}
             type="button"
           >
-            {/* <i className="exp-ux-close exp-ux-small" /> */}
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEgMTFMMTEgMU0xIDFMMTEgMTEiIHN0cm9rZT0iIzM1M0Y1QSIgc3Ryb2tlTGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg=="  style={{height:"18px" , transform: 'rotate(180deg)'}} alt="" />
-            {/* <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 384 512" style={{ position : "relative" , bottom:"-2px" , color:'#aeb0b2' }}><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg> */}
+            <i className="exp-ux-close exp-ux-small" />   
           </button>
         </div>
       </header>
