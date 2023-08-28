@@ -14,7 +14,6 @@
     "cookies",
     "storage",
     "tabs",
-    "browserAction",
     "*://*.expertvoice.com/"
   ],
   "browser_action": {},
@@ -48,5 +47,10 @@
     ],
     "persistent": false
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://expertvoice.com; object-src 'self'"
+  "applications": {
+    "gecko": {
+      "id": "cb5e8f5041aaccdfb4df6ef9798b752c0cae41d6@temporary-addon"
+    }
+  },
+  "content_security_policy": "script-src 'unsafe-eval' 'self' https://*.expertvoice.com; object-src 'self'"
 }
