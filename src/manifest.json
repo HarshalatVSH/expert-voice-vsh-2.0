@@ -18,21 +18,15 @@
       "js": ["content.min.js"]
     }
   ],
-  "web_accessible_resources": [{
-    "resources": [
-      "assets/fonts/experticity-ux.ttf",
-      "assets/fonts/source-sans-pro-v18-300.ttf",
-      "assets/fonts/source-sans-pro-v18-400.ttf",
-      "assets/fonts/source-sans-pro-v18-600.ttf",
-      "assets/images/preview.png"
-    ],
-    "matches": ["https://*.amazon.com/*", "https://*.amazon.ca/*"]
-  }],
-  "background": {
-    "service_worker": "worker.min.js"
-  },
-  "host_permissions": [
-    "*://*.expertvoice.com/"
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/fonts/experticity-ux.ttf", "assets/fonts/source-sans-pro-v18-300.ttf", "assets/fonts/source-sans-pro-v18-400.ttf", "assets/fonts/source-sans-pro-v18-600.ttf", "assets/images/preview.png"],
+      "matches": ["https://*.amazon.com/*", "https://*.amazon.ca/*"]
+    }
   ],
+  "background": {
+    "scripts": ["worker.min.js"]
+  },
+  "host_permissions": ["*://*.expertvoice.com/"],
   "permissions": ["activeTab", "cookies", "storage"]
 }

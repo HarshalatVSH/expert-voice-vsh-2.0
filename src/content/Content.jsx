@@ -1,17 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
-
-import { AnalyticEvent, MessageType } from '../constants';
-import extractor from '../extractor';
-import { sendAC } from '../helper';
+/* eslint-disable */
+import { useCallback, useEffect, useState } from "react";
+import { AnalyticEvent, MessageType } from "../constants";
+import extractor from "../extractor";
+import { sendAC } from "../helper";
 
 /**
  * Main Content Script - responsible for scrapping page and setting context
  */
+
 function Content() {
   const [context, setContext] = useState(null);
   const [pageData, setPageData] = useState(null);
   const [user, setUser] = useState(null);
-
+  console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
   const resetContext = useCallback(async () => {
     if (!pageData) {
       // No page data, nothing to do
