@@ -1,41 +1,57 @@
 /* eslint-disable  */
-import {
-  InlineVariant,
-  MessageType,
-  NotificationType,
-  UrlBase,
-  UtmPlacement,
-} from './constants';
+import { InlineVariant, MessageType, NotificationType, UrlBase, UtmPlacement } from "./constants";
 
 // ----------------------------------
 // Analytics Helpers
 // ----------------------------------
-export const sendAC = (action, data = {}) => chrome.runtime.sendMessage({
-  action,
-  data: {
-    ...data,
-    url: document.location.href,
-  },
-  type: MessageType.AC,
-});
+export const sendAC = (action, data = {}) =>
+  browser.runtime.sendMessage({
+    action,
+    data: {
+      ...data,
+      url: document.location.href,
+    },
+    type: MessageType.AC,
+  });
+
+export const event = (action,data={}) =>{
+  fetch(`${UrlBase}/xapi/ac/pub/1.0/event`, {
+    method: "POST",
+    body: JSON.stringify({
+      action:"EXTENSION_SEARCH",
+      appName: "ev-shop-plugin",
+      data: {
+        version: chrome.runtime.getManifest().version,
+        ...data,
+      },
+      mfgId: data?.mfgId || data?.orgId || undefined,
+      url: data?.url || undefined,
+      version: 1,
+    }),
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) => console.log(res,"helperRes"))
+  .catch((err) => console.log(err,"helperErr"));
+}
 
 // ----------------------------------
 // Auth Helpers
 // ----------------------------------
-export const AUTH_COOKIE = '__at'; // also __at2 with auth2 & gateway2
-export const AUTH_DOMAIN = 'https://www.expertvoice.com';
+export const AUTH_COOKIE = "__at"; // also __at2 with auth2 & gateway2
+export const AUTH_DOMAIN = "https://www.expertvoice.com";
 
-export const isAuthCookie = (c) => AUTH_DOMAIN.includes(c?.domain)
-  && c?.name?.startsWith(AUTH_COOKIE);
+export const isAuthCookie = (c) => AUTH_DOMAIN.includes(c?.domain) && c?.name?.startsWith(AUTH_COOKIE);
 // export const getAuthCookie = async () => {
-//   const cookies = await chrome.cookies.getAll({ url: AUTH_DOMAIN });
+//   const cookies = await browser.cookies.getAll({ url: AUTH_DOMAIN });
 //   return cookies.find((c) => isAuthCookie(c));
-// };  
+// };
 
 export function getAuthCookie() {
-  return new Promise(function(resolve, reject) {
-    chrome.cookies.getAll({ url: AUTH_DOMAIN }, function(cookies) {
-      const authCookie = cookies.find(function(c) {
+  return new Promise(function (resolve, reject) {
+    browser.cookies.getAll({ url: AUTH_DOMAIN }, function (cookies) {
+      const authCookie = cookies.find(function (c) {
         return isAuthCookie(c);
       });
       resolve(authCookie);
@@ -51,7 +67,7 @@ export const isAuthenticated = async () => {
 // Cache Helpers
 // ----------------------------------
 // export const getFromCache = async (key, { ttl } = {}) => {
-//   const entries = await chrome.storage.local.get([key]);
+//   const entries = await browser.storage.local.get([key]);
 //   const entry = entries?.[key];
 //   return entry?.created && entry?.value
 //     && (!ttl || entry.created + ttl > Date.now()) ? entry.value : null;
@@ -59,7 +75,7 @@ export const isAuthenticated = async () => {
 
 export const getFromCache = async (key, { ttl } = {}) => {
   return new Promise((resolve, reject) => {
-    chrome.storage.local.get([key], (entries) => {
+    browser.storage.local.get([key], (entries) => {
       const entry = entries?.[key];
       if (entry?.created && entry?.value && (!ttl || entry.created + ttl > Date.now())) {
         resolve(entry.value);
@@ -76,7 +92,7 @@ export const getCacheable = async (key, supplier, { reset = false, ttl } = {}) =
   if (cached) {
     if (reset) {
       // Remove the previously cached item
-      chrome.storage.local.remove(key);
+      browser.storage.local.remove(key);
     } else {
       return cached;
     }
@@ -85,7 +101,7 @@ export const getCacheable = async (key, supplier, { reset = false, ttl } = {}) =
   const loaded = await supplier();
   if (loaded) {
     // Cache the new item
-    chrome.storage.local.set({
+    browser.storage.local.set({
       [key]: {
         created: Date.now(),
         value: loaded,
@@ -96,14 +112,14 @@ export const getCacheable = async (key, supplier, { reset = false, ttl } = {}) =
 
   return null;
 };
-export const removeFromCache = async (...keys) => chrome.storage.local.remove(keys);
+export const removeFromCache = async (...keys) => browser.storage.local.remove(keys);
 
 // ----------------------------------
 // Product Price Helpers
 // ----------------------------------
 export const getPrice = (data) => {
   let p = data?.bestPrice || data?.price;
-  if (typeof p === 'string') {
+  if (typeof p === "string") {
     p = parseFloat(p);
   }
   return p >= 0 ? p : null; // verify if price is valid
@@ -124,56 +140,51 @@ export const formatPrice = (product) => {
     return null;
   }
 
-  const currency = product.currencyCode && product.currencyCode !== 'N/A'
-    ? product.currencyCode : 'USD';
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(price);
+  const currency = product.currencyCode && product.currencyCode !== "N/A" ? product.currencyCode : "USD";
+  return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(price);
 };
 
 // ----------------------------------
 // Review Summary Helpers
 // ----------------------------------
-export const getRoundedStar = (reviewStars) => (
-  reviewStars ? (Math.round(reviewStars * 10) / 10).toFixed(1) : null
-);
+export const getRoundedStar = (reviewStars) => (reviewStars ? (Math.round(reviewStars * 10) / 10).toFixed(1) : null);
 
 export const formatInteger = (n) => {
-  if (typeof n !== 'number') {
+  if (typeof n !== "number") {
     return null;
   }
-  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(n);
+  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
 };
 
 // ----------------------------------
 // Product Name Helpers
 // ----------------------------------
 const decodeHTML = (string) => {
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.innerHTML = string;
   return div.textContent;
 };
 
-const formatHtml = (input = '') => {
+const formatHtml = (input = "") => {
   let output = input;
-  if (input.includes('&reg')) {
-    output = output.replace(/&reg/gi, '&#174');
+  if (input.includes("&reg")) {
+    output = output.replace(/&reg/gi, "&#174");
   }
-  if (input.includes('&copy')) {
-    output = output.replace(/&copy/gi, '&#169');
+  if (input.includes("&copy")) {
+    output = output.replace(/&copy/gi, "&#169");
   }
-  if (input.includes('&trade')) {
-    output = output.replace(/&trade/gi, '&#8482');
+  if (input.includes("&trade")) {
+    output = output.replace(/&trade/gi, "&#8482");
   }
   return output;
 };
 
-export const formatProductName = (value) => (
-  decodeHTML(formatHtml(value).replace(/&#(\d+);/g, (m, n) => String.fromCharCode(n)))
-);
+export const formatProductName = (value) => decodeHTML(formatHtml(value).replace(/&#(\d+);/g, (m, n) => String.fromCharCode(n)));
 
 // ----------------------------------
 // Context Helpers
 // ----------------------------------
-export const getNotificationType = ({ brand , page, product }, user) => {
+export const getNotificationType = ({ brand, page, product }, user) => {
   if (!brand) {
     return null;
   }
@@ -238,7 +249,7 @@ export const toAbsoluteUrl = (src, base = UrlBase) => {
     return null;
   }
 
-  return (new URL(src, base)).href;
+  return new URL(src, base).href;
 };
 
 const addQueryParams = (url, newParams = []) => {
@@ -252,22 +263,17 @@ const addQueryParams = (url, newParams = []) => {
   return newUrl.href;
 };
 
-const addUTMParams = (url, placement) => (
+const addUTMParams = (url, placement) =>
   addQueryParams(url, [
-    ['ac_tracking', 'extension'],
-    ['utm_source', 'amazon'],
-    ['utm_medium', 'chrome'],
-    ['utm_placement', placement],
-  ])
-);
+    ["ac_tracking", "extension"],
+    ["utm_source", "amazon"],
+    ["utm_medium", "chrome"],
+    ["utm_placement", placement],
+  ]);
 
-export const getEVHomeUrl = (placement = UtmPlacement.POPUP_LEARN) => (
-  addUTMParams(UrlBase, placement)
-);
+export const getEVHomeUrl = (placement = UtmPlacement.POPUP_LEARN) => addUTMParams(UrlBase, placement);
 
-export const getEVBrandsUrl = (placement = UtmPlacement.POPUP_MY_BRANDS) => (
-  addUTMParams(`${UrlBase}/home/brands`, placement)
-);
+export const getEVBrandsUrl = (placement = UtmPlacement.POPUP_MY_BRANDS) => addUTMParams(`${UrlBase}/home/brands`, placement);
 
 export const getBrandUrls = (brand, placement = UtmPlacement.POPUP_BRAND) => {
   if (!brand) return {};
@@ -277,17 +283,11 @@ export const getBrandUrls = (brand, placement = UtmPlacement.POPUP_BRAND) => {
   };
 };
 
-export const getProductUrls = (product, placementPrefix = 'POPUP') => {
+export const getProductUrls = (product, placementPrefix = "POPUP") => {
   if (!product) return {};
   return {
     pdp: addUTMParams(product.pdpUrl, UtmPlacement[`${placementPrefix}_PRODUCT`]),
-    reviewPrompt: addUTMParams(
-      addQueryParams(product.pdpUrl, [['launch', 'true']]),
-      UtmPlacement[`${placementPrefix}_REVIEWS`],
-    ),
-    reviews: addUTMParams(
-      addQueryParams(product.pdpUrl, [['section', 'recommendations']]),
-      UtmPlacement[`${placementPrefix}_REVIEWS`],
-    ),
+    reviewPrompt: addUTMParams(addQueryParams(product.pdpUrl, [["launch", "true"]]), UtmPlacement[`${placementPrefix}_REVIEWS`]),
+    reviews: addUTMParams(addQueryParams(product.pdpUrl, [["section", "recommendations"]]), UtmPlacement[`${placementPrefix}_REVIEWS`]),
   };
 };

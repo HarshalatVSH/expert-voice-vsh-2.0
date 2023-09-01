@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -35,7 +36,7 @@ body.append(overlay);
 // Work within a shadow DOM to encapsulate styles
 // https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
 const shadow = overlay.attachShadow({ mode: 'open' });
-shadow.adoptedStyleSheets = [overlayStyles];
+// shadow.adoptedStyleSheets = [overlayStyles];
 
 const overlayRoot = createRoot(shadow);
 overlayRoot.render(<Overlay />);
@@ -50,7 +51,7 @@ if (amazonPriceEl) {
   amazonPriceEl.insertAdjacentElement('beforebegin', inline);
 
   const inlineShadow = inline.attachShadow({ mode: 'open' });
-  inlineShadow.adoptedStyleSheets = [inlineStyles];
+  // inlineShadow.adoptedStyleSheets = [inlineStyles];
   createRoot(inlineShadow).render(<Inline />);
 } else if (document.location.href.includes('/dp/')) {
   // Inline element fail to attach, only send when on Amazon PDPs

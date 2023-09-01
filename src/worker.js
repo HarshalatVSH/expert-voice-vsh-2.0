@@ -1,6 +1,6 @@
 /* eslint-disable  */
 import { AnalyticEvent, CdnUrlBase, MessageType, NotificationType, UrlBase } from "./constants";
-import { getAuthCookie, getCacheable, getNotificationType, isAuthCookie, isAuthenticated, toAbsoluteUrl, removeFromCache } from "./helper";
+import { getAuthCookie, getCacheable, getNotificationType, isAuthCookie, isAuthenticated, toAbsoluteUrl, removeFromCache, event } from "./helper";
 
 const ACTIVE_ICONS = {
   16: "assets/images/icon16.png",
@@ -42,21 +42,73 @@ const loadUser = () =>
     { ttl: 86400000 }
   ); // 1 day
 
+// const loadContext = async (params = {}) => {
+//   try {
+//     const res = await fetch(`${UrlBase}/xapi/browser-support/pub/1.0/search`, {
+//       method: "POST",
 
-const loadContext = async (params = {}) => {
+//       body: JSON.stringify({
+//         ...params,
+//         maxResults: 1,
+//       }),
+//       credentials: "include",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     // const data = await res.json();
+//     const data = {
+//       brands: [
+//         {
+//           orgId: 139576,
+//           text: "Klymit",
+//           score: 15,
+//           exactMatch: true,
+//           orgKey: "klymit",
+//           url: "/brand/klymit",
+//           accessType: null,
+//           avatarUrl: "/xapi/xds/ext/gimg/ee9afa6cfb1f4683/1692691833/brandAvatar.png",
+//           active: true,
+//           discount: -1,
+//         },
+//       ],
+//       products: [
+//         {
+//           orgId: 139576,
+//           text: "Static V Sleeping Pad",
+//           score: 1.0,
+//           exactMatch: true,
+//           productCode: "Static-V",
+//           imageUrl: "https://cdn.expertvoice.com/io/client/mfg/klymit/images/product/src/sc.400.400.bf/Klymit_StaticV_Front_Deep_StuffSack_v1.jpg",
+//           pdpUrl: "/product/klymit-static-v-sleeping-pad/139576?p=Static-V",
+//           price: 0.0,
+//           msrp: 0.0,
+//           bestPrice: 0.0,
+//           discountPct: 0.0,
+//           reviewStars: 4.53,
+//           reviewRating: 8.92,
+//           reviewCount: 324,
+//           inStock: false,
+//           currencyCode: "N/A",
+//           accessConfirmed: false,
+//         },
+//       ],
+//     };
+
+//     return {
+//       brand,
+//       page: params,
+//       product,
+//     };
+//   } catch (ex) {
+//     // ignore
+//   }
+
+//   return null;
+// };
+
+const loadContext =  (data) => {
   try {
-    const res = await fetch(`${UrlBase}/xapi/browser-support/pub/1.0/search`, {
-      method: "POST",
-      body: JSON.stringify({
-        ...params,
-        maxResults: 1,
-      }),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
     let [brand] = data.brands || [];
     let [product] = data.products || [];
     if (brand) {
@@ -100,16 +152,16 @@ const loadContext = async (params = {}) => {
     }
     return {
       brand,
-      page: params,
+      page: data,
       product,
     };
   } catch (ex) {
     // ignore
   }
-
   return null;
 };
 
+  
 const sendEvent = (action, data = {}) => {
   fetch(`${UrlBase}/xapi/ac/pub/1.0/event`, {
     method: "POST",
@@ -136,29 +188,29 @@ const syncBadge = (tabId, context, user) => {
     const notif = getNotificationType(context, user);
     if (context?.brand?.active && notif) {
       // We got a high-confidence match, update the icon to be 'active'.
-      chrome.browserAction.setIcon({ tabId, path: ACTIVE_ICONS });
-      chrome.browserAction.setBadgeText({ tabId, text: "1" });
-      chrome.browserAction.setBadgeBackgroundColor({
+      browser.browserAction.setIcon({ tabId, path: ACTIVE_ICONS });
+      browser.browserAction.setBadgeText({ tabId, text: "1" });
+      browser.browserAction.setBadgeBackgroundColor({
         tabId,
         color: notif === NotificationType.ACTIVE ? "#52B382" : "#E3E3E3",
       });
     } else {
       // Keep the extension icon in the 'inactive' state.
-      chrome.browserAction.setIcon({ tabId, path: INACTIVE_ICONS });
-      chrome.browserAction.setBadgeText({ tabId, text: "" });
+      browser.browserAction.setIcon({ tabId, path: INACTIVE_ICONS });
+      browser.browserAction.setBadgeText({ tabId, text: "" });
     }
   } else {
-    chrome.browserAction.setIcon({ tabId, path: INACTIVE_ICONS });
-    chrome.browserAction.setBadgeText({ tabId, text: '' });
+    browser.browserAction.setIcon({ tabId, path: INACTIVE_ICONS });
+    browser.browserAction.setBadgeText({ tabId, text: "" });
   }
 };
 
 const syncContext = (tabId, context, user) => {
-  chrome.tabs.sendMessage(tabId, { type: MessageType.DATA, context, user });
+  browser.tabs.sendMessage(tabId, { type: MessageType.DATA, context, user });
 };
 
 const triggerSync = async (tabId, user, sendResponse) => {
-  const context = await chrome.tabs.sendMessage(tabId, { type: MessageType.SYNC, user });
+  const context = await browser.tabs.sendMessage(tabId, { type: MessageType.SYNC, user });
   if (context.brand) {
     syncBadge(tabId, context, user);
     syncContext(tabId, context, user);
@@ -170,23 +222,37 @@ const triggerSync = async (tabId, user, sendResponse) => {
     });
   }
 };
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   switch (msg.type || "") {
     case MessageType.AC:
-      sendEvent(msg.action, msg.data);
+      // sendEvent(msg.action, msg.data);
+      if(msg.data){
+        event(msg.action, msg.data);
+      }
       break;
     case MessageType.CONTEXT:
       // Search for the brand & load the user
-      Promise.all([loadContext(msg.data), loadUser()]).then(([context, user]) => {
+    let contextData = loadContext(msg.data)
+      Promise.all([loadUser()]).then(([user]) => {
         // Sync the badge with the brand results
-        syncBadge(sender.tab.id, context, user);
-        syncContext(sender.tab.id, context, user);
+        syncBadge(sender.tab.id, contextData, user);
+        syncContext(sender.tab.id, contextData, user);
 
         sendResponse({
-          ...context,
+          ...contextData,
           user,
         });
       });
+      // Promise.all([loadContext(msg.data), loadUser()]).then(([context, user]) => {
+      //   // Sync the badge with the brand results
+      //   syncBadge(sender.tab.id, context, user);
+      //   syncContext(sender.tab.id, context, user);
+
+      //   sendResponse({
+      //     ...context,
+      //     user,
+      //   });
+      // });
       break;
     case MessageType.LOGIN:
       fetch(`${UrlBase}/sign-on/service/sign-in`, {
@@ -220,7 +286,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       triggerSync(sender.tab.id, msg.user, sendResponse);
       break;
     case MessageType.LOGIN_START:
-      chrome.tabs.sendMessage(sender.tab.id, { type: MessageType.LOGIN_SHOW });
+      browser.tabs.sendMessage(sender.tab.id, { type: MessageType.LOGIN_SHOW });
       break;
     default:
       return false;
@@ -230,19 +296,20 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 // Send an AC event when the user first installs
-chrome.runtime.onInstalled.addListener((details) => {
-  if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+browser.runtime.onInstalled.addListener((details) => {
+  if (details.reason === browser.runtime.OnInstalledReason.INSTALL) {
     sendEvent(AnalyticEvent.INSTALL);
   }
 });
 
 // Trigger the content popup on the tab where the action (extension icon) was clicked
-chrome.browserAction?.onClicked.addListener((tab) => {
-  chrome.tabs.sendMessage(tab.id, { type: MessageType.OPEN });
+browser.browserAction?.onClicked.addListener((tab) => {
+  browser.tabs.sendMessage(tab.id, { type: MessageType.OPEN });
+  // browser.runtime.sendMessage(tab.id, { type: MessageType.OPEN });
 });
 
 // Watch for changes to the auth cookie to maintain the auth state
-chrome.cookies.onChanged.addListener(async (e) => {
+browser.cookies.onChanged.addListener(async (e) => {
   // Check if this is our auth cookie
   if (isAuthCookie(e.cookie)) {
     const c = await getAuthCookie();
@@ -254,11 +321,11 @@ chrome.cookies.onChanged.addListener(async (e) => {
 });
 
 // Trigger a sync event whenever a tab is reactivated
-chrome.tabs.onActivated.addListener(async () => {
+browser.tabs.onActivated.addListener(async () => {
   try {
     const user = await loadUser();
 
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
 
     triggerSync(tab.id, user);
   } catch (ex) {

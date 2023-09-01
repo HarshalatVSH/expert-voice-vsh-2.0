@@ -1,17 +1,17 @@
 /* eslint-disable  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-import { AnalyticEvent, MessageType } from '../constants';
-import { sendAC } from '../helper';
-import { ErrorAlert } from '../components/Alert';
+import { AnalyticEvent, MessageType } from "../constants";
+import { sendAC } from "../helper";
+import { ErrorAlert } from "../components/Alert";
 
 const Errors = {
-  'signIn.invalid': 'Oops. this account information was not recognized.',
-  'signIn.locked': 'Looks like it\'s time to change your password. Give it a quick update and try logging in again.',
-  'signIn.unauthorized': 'Uh oh, the account information you entered is incorrect.',
-  'signIn.restricted': 'Uh oh, looks like your access to ExpertVoice has been disabled. Contact your store manager or HR department to find out why.',
-  'signIn.serviceError': 'Sorry, we can\'t log you in right now. Please come back in a few minutes and try again.',
+  "signIn.invalid": "Oops. this account information was not recognized.",
+  "signIn.locked": "Looks like it's time to change your password. Give it a quick update and try logging in again.",
+  "signIn.unauthorized": "Uh oh, the account information you entered is incorrect.",
+  "signIn.restricted": "Uh oh, looks like your access to ExpertVoice has been disabled. Contact your store manager or HR department to find out why.",
+  "signIn.serviceError": "Sorry, we can't log you in right now. Please come back in a few minutes and try again.",
 };
 
 /**
@@ -19,9 +19,9 @@ const Errors = {
  */
 function LoginForm(props) {
   const [error, setError] = useState(null);
-  const [identifier, setIdentifier] = useState('');
+  const [identifier, setIdentifier] = useState("");
   const [interactions, setInteractions] = useState({});
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   return (
@@ -36,19 +36,15 @@ function LoginForm(props) {
               }}
               type="button"
             >
-              <i className="exp-ux-chevron exp-ux-medium" />             
+              <i className="exp-ux-chevron exp-ux-medium" />
             </button>
             <span className="title-text">Sign into ExpertVoice</span>
           </>
         )}
 
         <div className="actions">
-          <button
-            className="btn-icon close-button"
-            onClick={props.onClose}
-            type="button"
-          >
-            <i className="exp-ux-close exp-ux-small" />   
+          <button className="btn-icon close-button" onClick={props.onClose} type="button">
+            <i className="exp-ux-close exp-ux-small" />
           </button>
         </div>
       </header>
@@ -61,8 +57,7 @@ function LoginForm(props) {
             setError(null);
             setSubmitting(true);
 
-            const res = await chrome.runtime
-              .sendMessage({ identifier, password, type: MessageType.LOGIN });
+            const res = await browser.runtime.sendMessage({ identifier, password, type: MessageType.LOGIN });
             setSubmitting(false);
 
             if (res?.error) {
@@ -74,11 +69,7 @@ function LoginForm(props) {
             }
           }}
         >
-          {error ? (
-            <ErrorAlert className="form-error">
-              {Errors[error] || 'Oops. Something went wrong. Please try again.'}
-            </ErrorAlert>
-          ) : null}
+          {error ? <ErrorAlert className="form-error">{Errors[error] || "Oops. Something went wrong. Please try again."}</ErrorAlert> : null}
 
           <div className="form-control">
             <input
@@ -98,11 +89,7 @@ function LoginForm(props) {
             />
             <label htmlFor="identifier">Email or Username</label>
 
-            {!identifier && interactions.identifier ? (
-              <div className="form-helper guidance warning">
-                You must provide an email or username to sign in.
-              </div>
-            ) : null}
+            {!identifier && interactions.identifier ? <div className="form-helper guidance warning">You must provide an email or username to sign in.</div> : null}
           </div>
           <div className="form-control">
             <input
@@ -120,18 +107,10 @@ function LoginForm(props) {
             />
             <label htmlFor="password">Password</label>
 
-            {!password && interactions.password ? (
-              <div className="form-helper guidance warning">
-                You must provide your password to sign in.
-              </div>
-            ) : null}
+            {!password && interactions.password ? <div className="form-helper guidance warning">You must provide your password to sign in.</div> : null}
           </div>
 
-          <button
-            className="btn btn-primary btn-report-submit"
-            disabled={!identifier || !password}
-            type="submit"
-          >
+          <button className="btn btn-primary btn-report-submit" disabled={!identifier || !password} type="submit">
             Sign in
           </button>
 

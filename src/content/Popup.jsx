@@ -1,27 +1,20 @@
 /* eslint-disable  */
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-import BrandMatch from './BrandMatch';
-import LoginForm from './LoginForm';
-import ReportForm from './ReportForm';
-import ProductMatch from './ProductMatch';
+import BrandMatch from "./BrandMatch";
+import LoginForm from "./LoginForm";
+import ReportForm from "./ReportForm";
+import ProductMatch from "./ProductMatch";
 
-import {
-  AnalyticEvent,
-  CtaType,
-  MessageType,
-  NotificationType,
-  PopupMode,
-} from '../constants';
-import { getEVHomeUrl, sendAC } from '../helper';
+import { AnalyticEvent, CtaType, MessageType, NotificationType, PopupMode } from "../constants";
+import { getEVHomeUrl, sendAC } from "../helper";
 
 /**
  * EV Shop Extension Popup
  */
 function Popup(props) {
   const [mode, setMode] = useState(props.mode);
-
   useEffect(() => {
     // Bind the message listener to respond to the background worker
     const listener = (msg) => {
@@ -32,9 +25,9 @@ function Popup(props) {
       return true;
     };
 
-    chrome.runtime.onMessage.addListener(listener);
+    browser.runtime.onMessage.addListener(listener);
     return () => {
-      chrome.runtime.onMessage.removeListener(listener);
+      browser.runtime.onMessage.removeListener(listener);
     };
   });
 
@@ -52,39 +45,29 @@ function Popup(props) {
   }
 
   if (mode === PopupMode.REPORT) {
-    return (
-      <ReportForm
-        onClose={props.onClose}
-        onFinish={() => setMode(null)}
-      />
-    );
+    return <ReportForm onClose={props.onClose} onFinish={() => setMode(null)} />;
   }
 
-  const sendCtaClickEvent = (type = CtaType.BRAND, source = 'button') => () => {
-    sendAC(AnalyticEvent.CTA_CLICK, {
-      brand: props.brand || null,
-      product: props.product || null,
-      source,
-      type,
-    });
-  };
-
+  const sendCtaClickEvent =
+    (type = CtaType.BRAND, source = "button") =>
+    () => {
+      sendAC(AnalyticEvent.CTA_CLICK, {
+        brand: props.brand || null,
+        product: props.product || null,
+        source,
+        type,
+      });
+    };
 
   return (
     <section className="panel" id="popup">
       <header className="panel-header">
         <i className="exp-ux-bolt exp-ux-small ev-logo" />
         <span className="title-text">Tips</span>
-        {props.notification ? (
-          <div className={`badge badge-${props.notification === NotificationType.ACTIVE ? 'success' : 'secondary'}`}>1</div>
-        ) : null}
+        {props.notification ? <div className={`badge badge-${props.notification === NotificationType.ACTIVE ? "success" : "secondary"}`}>1</div> : null}
 
         <div className="actions">
-          <button
-            className="btn-icon close-button"
-            onClick={props.onClose}
-            type="button"
-          >
+          <button className="btn-icon close-button" onClick={props.onClose} type="button">
             <i className="exp-ux-close exp-ux-small" />
           </button>
         </div>
@@ -92,59 +75,31 @@ function Popup(props) {
 
       <main className="panel-body">
         {props.product && props.brand?.active ? (
-          <ProductMatch
-            brand={props.brand}
-            notification={props.notification}
-            product={props.product}
-            page={props.page}
-            sendCtaClickEvent={sendCtaClickEvent}
-            user={props.user}
-          />
+          <ProductMatch brand={props.brand} notification={props.notification} product={props.product} page={props.page} sendCtaClickEvent={sendCtaClickEvent} user={props.user} />
+        ) : props.brand ? (
+          <BrandMatch brand={props.brand} sendCtaClickEvent={sendCtaClickEvent} user={props.user} />
         ) : (
-          props.brand ? (
-            <BrandMatch
-              brand={props.brand}
-              sendCtaClickEvent={sendCtaClickEvent}
-              user={props.user}
-            />
-          ) : (
-            <>
-              <h1 className="type-title">No tips for this page</h1>
-              <p className="subtext tertiary-text small-text">
-                As you browse Amazon.com, we&apos;ll automatically look for
-                brands that may offer you exclusive discounts on ExpertVoice.
-              </p>
-              <div className="sample-panel">
-                <img
-                  alt="Example"
-                  className="sample-image"
-                  src={chrome.runtime.getURL('assets/images/preview.png')}
-                />
-                <p className="small-text">An alert will let you know when there may be a relevant offer on ExpertVoice.</p>
-              </div>
-            </>
-          )
+          <>
+            <h1 className="type-title">No tips for this page</h1>
+            <p className="subtext tertiary-text small-text">As you browse Amazon.com, we&apos;ll automatically look for brands that may offer you exclusive discounts on ExpertVoice.</p>
+            <div className="sample-panel">
+              <img alt="Example" className="sample-image" src={browser.runtime.getURL("assets/images/preview.png")} />
+              <p className="small-text">An alert will let you know when there may be a relevant offer on ExpertVoice.</p>
+            </div>
+          </>
         )}
 
         <div className="learn-more">
           {props.user ? (
             <p className="tertiary-text small-text">
               Signed in as {props.user.firstName} {props.user.lastName}.
-              <button
-                className="btn-logout link tertiary-text small-text"
-                onClick={props.onLogout}
-                type="button"
-              >
+              <button className="btn-logout link tertiary-text small-text" onClick={props.onLogout} type="button">
                 Sign out
               </button>
             </p>
           ) : (
             <>
-              {!props.brand ? (
-                <p className="tertiary-text small-text">
-                  Sign in to ExpertVoice to get more accurate tips.
-                </p>
-              ) : null}
+              {!props.brand ? <p className="tertiary-text small-text">Sign in to ExpertVoice to get more accurate tips.</p> : null}
               <button
                 className="btn btn-primary btn-login"
                 onClick={() => {
@@ -157,13 +112,7 @@ function Popup(props) {
               <p className="tertiary-text small-text">
                 Learn more about
                 <> </>
-                <a
-                  className="link"
-                  href={getEVHomeUrl()}
-                  onClick={sendCtaClickEvent(CtaType.EV_HOME, 'learn')}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
+                <a className="link" href={getEVHomeUrl()} onClick={sendCtaClickEvent(CtaType.EV_HOME, "learn")} rel="noopener noreferrer" target="_blank">
                   ExpertVoice
                 </a>
               </p>
@@ -227,3 +176,4 @@ Popup.propTypes = {
 };
 
 export default Popup;
+
