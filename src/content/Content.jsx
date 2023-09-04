@@ -33,7 +33,7 @@ function Content() {
     const res = await fetch(`https://www.expertvoice.com/xapi/browser-support/pub/1.0/search`, {
       method: "POST",
       body: JSON.stringify({
-        ...params,
+        ...pageData,
         maxResults: 1,
       }),
       credentials: "include",
