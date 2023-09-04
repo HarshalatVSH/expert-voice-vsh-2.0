@@ -1,7 +1,7 @@
 /* eslint-disable  */
 import React, { useEffect, useRef, useState } from "react";
 
-import { AnalyticEvent, MessageType, NotificationType, PopupMode } from "../constants";
+import { AnalyticEvent, ImageUrlBase, MessageType, NotificationType, PopupMode } from "../constants";
 import { sendAC, getNotificationType } from "../helper";
 import Popup from "./Popup";
 
@@ -24,7 +24,6 @@ function Overlay() {
     '--text-color': '#757575',
     '--text-hover-color': '#4D4D4D',
     alignItems: 'center',
-    backgroundColor: 'var(--bg-color)',
     border: 'none',
     borderRadius: '3px 0px 0px 3px',
     boxShadow: 'rgba(0, 0, 0, 0.18) 0px 2px 11px',
@@ -43,8 +42,13 @@ function Overlay() {
     textDecoration: 'none',
     cursor: 'pointer',
     margin: '0px',
-    background: 'none',
+    background: 'rgb(255, 26, 26)',
   };
+
+  const ImageUrlBaseStyle = {
+    height : "18px",
+    width : "18px"
+  }
   
 
   useEffect(() => {
@@ -132,7 +136,8 @@ function Overlay() {
           }}
           type="button"
         >
-          <i className="exp-ux-bolt exp-ux-small" />
+          {/* <i className="exp-ux-bolt exp-ux-small" /> */}
+          <img src={ImageUrlBase} alt="" style={ImageUrlBaseStyle}/>
         </button>
       ) : null}
 

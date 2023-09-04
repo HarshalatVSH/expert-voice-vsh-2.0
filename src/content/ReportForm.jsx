@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { AnalyticEvent, ClosebtnIcon } from "../constants";
+import { AnalyticEvent, BackbtnIcon, ClosebtnIcon, SuccessbtnIcon } from "../constants";
 import { sendAC } from "../helper";
 
 /**
@@ -25,7 +25,7 @@ function ReportForm(props) {
   };
 
   const panelHeader = {
-    borderBottom: '1px solid rgb(227, 227, 227)',
+    borderBottom: submitted ? null : '1px solid rgb(227, 227, 227)' ,
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'space-between',
@@ -124,7 +124,8 @@ function ReportForm(props) {
   const submit = {
     background: !issue ? 'rgb(252, 191, 189)' : 'rgb(255, 26, 26)',
     cursor: !issue ? 'default' : 'pointer',
-    color: "rgb(255, 255, 255)"
+    color: "rgb(255, 255, 255)",
+    border : "medium"
   };
 
   const submitBtnStyle = {...submitBtn,...submit}
@@ -164,6 +165,16 @@ function ReportForm(props) {
     height : "14px"
   }
 
+  const BackbtnIconStyle = {
+    height: "23px",
+    position: "relative",
+    top: "2px"
+  }
+
+  const SuccessbtnIconStyle = {
+    height : "45px"
+  }
+
   return (
     <section className="panel" id="popup" style={reportPopupStyles}>
       <header style={panelHeader} className={`panel-header${submitted ? " empty" : ""}`}>
@@ -178,7 +189,7 @@ function ReportForm(props) {
               style={backBtnStyle}
             >
               {/* <i className="exp-ux-chevron exp-ux-medium" /> */}
-              <span>{"<"}</span>
+              <img src={BackbtnIcon} alt="" style={BackbtnIconStyle}/>
             </button>
             <span className="title-text" style={panelTitle} >Report an issue</span>
           </>
@@ -195,7 +206,8 @@ function ReportForm(props) {
       {submitted ? (
         <main className="panel-body report-success" style={reportSuccess}>
           <div className="confirmation">
-            <i className="confirmation-icon exp-ux-check-circle exp-ux-xlarge" style={{fontsize: "48px"}}/>
+            {/* <i className="confirmation-icon exp-ux-check-circle exp-ux-xlarge" style={{fontsize: "48px"}}/> */}
+            <img src={SuccessbtnIcon} alt="" style={SuccessbtnIconStyle}/>
             <h2 className="confirmation-title type-title" style={confirmationTitle}>Thank you</h2>
           </div>
           <p className="subtext secondary-text small-text" style={secondaryText}>Your issue has been submitted. Thank you for helping to make this extension better!</p>

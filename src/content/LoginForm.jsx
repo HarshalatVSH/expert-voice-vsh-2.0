@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { AnalyticEvent, ClosebtnIcon, MessageType } from "../constants";
+import { AnalyticEvent, BackbtnIcon, ClosebtnIcon, MessageType } from "../constants";
 import { sendAC } from "../helper";
 import { ErrorAlert } from "../components/Alert";
 
@@ -173,6 +173,11 @@ function LoginForm(props) {
     height : "14px"
   }
 
+  const BackbtnIconStyle = {
+    height: "23px",
+    position: "relative",
+    top: "2px"
+  }
 
   return (
     <section className="panel" id="popup" style={popupStyles} >
@@ -188,7 +193,7 @@ function LoginForm(props) {
               type="button"
             >
               {/* <i className="exp-ux-chevron exp-ux-medium" /> */}
-              <span style={backBtnStyles}>{"<"}</span>
+              <img src={BackbtnIcon} alt="" style={BackbtnIconStyle}/>
             </button>
             <span className="title-text" style={titleTextStyles}>Sign into ExpertVoice</span>
           </>

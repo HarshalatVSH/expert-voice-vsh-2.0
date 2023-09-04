@@ -153,9 +153,8 @@ function Popup(props) {
   };
 
   const btnReport = {
-    marginLeft: "6px",
     textDecoration: "underline",
-    fontSize: "11px",
+    fontSize: "12px",
     fontWeight: "400",
     lineHeight: "18px",
     color: "rgb(117, 117, 117)",
