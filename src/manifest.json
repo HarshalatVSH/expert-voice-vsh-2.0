@@ -22,7 +22,8 @@
     {
       "matches": [
         "https://*.amazon.com/*",
-        "https://*.amazon.ca/*"
+        "https://*.amazon.ca/*",
+        "https://www.amazon.in/*"
       ],
       "exclude_matches": [
         "https://expertvoice.com/*"

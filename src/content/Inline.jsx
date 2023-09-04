@@ -15,6 +15,79 @@ function Inline() {
   const [user, setUser] = useState(null);
   const [variant, setVariant] = useState(null);
 
+  const btnStyle = {
+    alignItems: "center",
+    display: "flex",
+    height: "40px",
+    lineHeight: "14px",
+    padding: "0 18px 0 12px",
+    width: "unset",
+    background: "rgb(255, 26, 26)",
+    color: "rgb(255, 255, 255)",
+    borderRadius: "6px",
+    fontWeight: "bold",
+    cursor : "pointer"
+  };
+
+  const inlineStyle = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "6px 18px",
+    margin: "18px 0px",
+  };
+
+
+  const reviewSummary = {
+    height: "40px",
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    border: "none",
+    color: "inherit",
+    outline: "none",
+    textDecoration: "none",
+  };
+
+  const averageStars = {
+    fontSize: "18px",
+    fontWeight: 600,
+    lineHeight: "24px",
+    alignItems: "center",
+    display: "inline-flex",
+    marginRight: "8px",
+  };
+
+  const linkStyle = {
+    lineHeight: "19px",
+    fontWeight: 600,
+    textDecoration: "underline",
+    fontSize: "13px",
+    fontWeight: 400,
+    lineHeight: "18px",
+    color: "rgb(77, 77, 77)",
+  };
+
+  
+  const DiscountsBtn = {
+    alignItems: 'center',
+    display: 'flex',
+    height: '40px',
+    lineHeight: '14px',
+    padding: '0px 18px 0px 12px',
+    width: 'unset',
+    background: "rgb(255, 26, 26)",
+    color: 'rgb(255, 255, 255)',
+    borderRadius: '3px',
+    fontFamily: 'inherit',
+    fontSize: '15px',
+    fontWeight: 600,
+    textAlign: 'center',
+    outline: 'none',
+    textDecoration: 'none',
+    border: 'none',
+    cursor : "pointer"
+  };
+  
   useEffect(() => {
     // Bind the message listener to respond to the background worker
     const listener = (msg) => {
@@ -55,13 +128,13 @@ function Inline() {
     if (context.product.reviewCount) {
       const roundedStars = getRoundedStar(context.product.reviewStars);
       return (
-        <a className="review-summary" href={productUrls.reviews} onClick={sendCtaClickEvent(CtaType.PDP_REVIEWS, "review-summary")} rel="noopener noreferrer" target="_blank">
-          <div className="average-stars type-title">
+        <a className="review-summary" style={reviewSummary} href={productUrls.reviews} onClick={sendCtaClickEvent(CtaType.PDP_REVIEWS, "review-summary")} rel="noopener noreferrer" target="_blank">
+          <div className="average-stars type-title" style={averageStars}> 
             <i className="exp-ux-starFilled exp-ux-small" />
             {roundedStars}
           </div>
 
-          <div className="secondary-text small-text link">{context.product.reviewCount > 1 ? `${formatInteger(context.product.reviewCount)} expert reviews` : "1 expert review"}</div>
+          <div className="secondary-text small-text link" style={linkStyle}>{context.product.reviewCount > 1 ? `${formatInteger(context.product.reviewCount)} expert reviews` : "1 expert review"}</div>
         </a>
       );
     }
@@ -80,13 +153,14 @@ function Inline() {
   if (!context || !context.product) {
     return null;
   }
-
+ 
   return (
-    <section id="inline">
+    <section id="inline" style={inlineStyle}>
       {!user ? (
         // Logged out state
         <button
           className="btn btn-primary"
+          style={btnStyle}
           onClick={() => {
             sendCtaClickEvent(CtaType.LOGIN);
             browser.runtime.sendMessage({ type: MessageType.LOGIN_START });
@@ -111,7 +185,7 @@ function Inline() {
         </a>
       ) : (
         // EV offers some discount for product
-        <a className="btn btn-primary" href={productUrls.pdp} onClick={sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
+        <a className="btn btn-primary" style={DiscountsBtn} href={productUrls.pdp} onClick={sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
           <i className="exp-ux-bolt exp-ux-small" />
           {evIsCheaper ? `Buy for ${formattedBestPrice}` : context.brand.discount > 0 ? `Up to ${context.brand.discount}% off` : "Discounts Available"}
         </a>

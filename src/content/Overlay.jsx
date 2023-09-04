@@ -18,6 +18,35 @@ function Overlay() {
 
   const openRequested = useRef(false);
 
+  const toggleButton = {
+    '--bg-color': '#FFF',
+    '--bg-hover-color': '#FFF',
+    '--text-color': '#757575',
+    '--text-hover-color': '#4D4D4D',
+    alignItems: 'center',
+    backgroundColor: 'var(--bg-color)',
+    border: 'none',
+    borderRadius: '3px 0px 0px 3px',
+    boxShadow: 'rgba(0, 0, 0, 0.18) 0px 2px 11px',
+    color: 'var(--text-color)',
+    display: 'flex',
+    height: '48px',
+    justifyContent: 'center',
+    position: 'fixed',
+    outline: 'none',
+    right: '0px',
+    top: '250px',
+    transition: 'background-color 50ms ease-in 0s, color 50ms ease-in 0s, right 150ms ease-out 0s',
+    width: '48px',
+    zIndex: '2147483646',
+    padding: '0px',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    margin: '0px',
+    background: 'none',
+  };
+  
+
   useEffect(() => {
     if (!context) {
       // No page data, nothing to do
@@ -92,6 +121,7 @@ function Overlay() {
       {notification ? (
         <button
           className={`toggle-button${notification === NotificationType.ACTIVE ? " rewarded" : ""}${open ? " hidden" : ""}${!open && visible ? " visible" : ""}`}
+          style={toggleButton}
           onClick={() => {
             setOpen(true);
             sendAC(AnalyticEvent.OPEN, {

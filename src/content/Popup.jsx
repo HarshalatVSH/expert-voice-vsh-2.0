@@ -59,21 +59,141 @@ function Popup(props) {
       });
     };
 
-  return (
-    <section className="panel" id="popup">
-      <header className="panel-header">
-        <i className="exp-ux-bolt exp-ux-small ev-logo" />
-        <span className="title-text">Tips</span>
-        {props.notification ? <div className={`badge badge-${props.notification === NotificationType.ACTIVE ? "success" : "secondary"}`}>1</div> : null}
+  const popupStyle = {
+    backgroundColor: "rgb(255, 255, 255)",
+    borderRadius: "3px",
+    boxShadow: "rgba(107, 101, 95, 0.2) 0px 1px 2px 1px",
+    position: "fixed",
+    right: "12px",
+    top: "12px",
+    width: "300px",
+    zIndex: 2147483647,
+  };
 
-        <div className="actions">
-          <button className="btn-icon close-button" onClick={props.onClose} type="button">
-            <i className="exp-ux-close exp-ux-small" />
+  const panelHeaderStyle = {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "12px",
+    borderBottom: "1px solid rgb(227, 227, 227)",
+  };
+
+  const titleText = {
+    color: "rgb(37, 37, 37)",
+    fontWeight: 600,
+    margin: "0px 6px",
+  };
+
+  const badgeSuccess = {
+    backgroundColor: props.notification === NotificationType.ACTIVE ? "rgb(82, 179, 130)" : "rgb(227, 227, 227)",
+    borderRadius: "6px",
+    fontWeight: 600,
+    height: "22px",
+    textAlign: "center",
+    width: "22px",
+  };
+
+  const actionStyle = {
+    alignItems: "center",
+    display: "flex",
+    flex: "1 1 auto",
+    justifyContent: "flex-end",
+  };
+
+  const closeBtnStyles = {
+    color: "rgb(117, 117, 117)",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    margin: "0px",
+    outline: "none",
+    padding: "0px",
+    textDecoration: "none",
+  };
+
+  const closeIcon = {
+    position: "relative",
+    top: "2px",
+    fontSize: "18px",
+  };
+
+  const panelBodyStyle = {
+    padding: "18px",
+    textAlign: "center",
+  };
+
+  const btnLoginStyles = {
+    margin: "12px 0px",
+    background: "rgb(255, 26, 26)",
+    color: "rgb(255, 255, 255)",
+    borderRadius: "8px",
+    display: "block",
+    fontFamily: "inherit",
+    fontSize: "15px",
+    fontWeight: 600,
+    padding: "12px",
+    textAlign: "center",
+    width: "100%",
+    cursor : "pointer"
+  };
+
+  const tertiaryTextStyles = {
+    fontSize: "13px",
+    fontWeight: 400,
+    lineHeight: "18px",
+    color: "rgb(117, 117, 117)",
+  };
+
+  const reportIssueStyles = {
+    marginTop: "18px",
+    fontSize: "13px",
+    fontWeight: 400,
+    lineHeight: "18px",
+    color: "rgb(117, 117, 117)",
+  };
+
+  const btnReport = {
+    marginLeft: "6px",
+    textDecoration: "underline",
+    fontSize: "11px",
+    fontWeight: "400",
+    lineHeight: "18px",
+    color: "rgb(117, 117, 117)",
+    background: "none",
+    border: "none",
+    cursor : "pointer"
+  };
+
+  const signOutBtn = { 
+    background: "none", 
+    border: "medium", 
+    textDecoration: "underline" ,
+    color: "rgb(117, 117, 117)",
+    cursor : "pointer"
+  };
+
+  return (
+    <section className="panel" id="popup" style={popupStyle}>
+      <header className="panel-header" style={panelHeaderStyle}>
+        <i className="exp-ux-bolt exp-ux-small ev-logo" />
+        <span className="title-text" style={titleText}>
+          Tips
+        </span>
+        {props.notification ? (
+          <div className={`badge badge-${props.notification === NotificationType.ACTIVE ? "success" : "secondary"}`} style={badgeSuccess}>
+            1
+          </div>
+        ) : null}
+
+        <div className="actions" style={actionStyle}>
+          <button className="btn-icon close-button" style={closeBtnStyles} onClick={props.onClose} type="button">
+            {/* <i className="exp-ux-close exp-ux-small" /> */}
+            <span style={closeIcon}>X</span>
           </button>
         </div>
       </header>
 
-      <main className="panel-body">
+      <main className="panel-body" style={panelBodyStyle}>
         {props.product && props.brand?.active ? (
           <ProductMatch brand={props.brand} notification={props.notification} product={props.product} page={props.page} sendCtaClickEvent={sendCtaClickEvent} user={props.user} />
         ) : props.brand ? (
@@ -91,9 +211,9 @@ function Popup(props) {
 
         <div className="learn-more">
           {props.user ? (
-            <p className="tertiary-text small-text">
+            <p className="tertiary-text small-text" style={{color: "rgb(117, 117, 117)"}}>
               Signed in as {props.user.firstName} {props.user.lastName}.
-              <button className="btn-logout link tertiary-text small-text" onClick={props.onLogout} type="button">
+              <button style={signOutBtn} className="btn-logout link tertiary-text small-text" onClick={props.onLogout} type="button">
                 Sign out
               </button>
             </p>
@@ -106,13 +226,14 @@ function Popup(props) {
                   setMode(PopupMode.LOGIN);
                 }}
                 type="button"
+                style={btnLoginStyles}
               >
                 Sign in
               </button>
-              <p className="tertiary-text small-text">
+              <p className="tertiary-text small-text" style={tertiaryTextStyles}>
                 Learn more about
                 <> </>
-                <a className="link" href={getEVHomeUrl()} onClick={sendCtaClickEvent(CtaType.EV_HOME, "learn")} rel="noopener noreferrer" target="_blank">
+                <a className="link" href={getEVHomeUrl()} style={{ textDecoration: "underline", color: "rgb(117, 117, 117)" }} onClick={sendCtaClickEvent(CtaType.EV_HOME, "learn")} rel="noopener noreferrer" target="_blank">
                   ExpertVoice
                 </a>
               </p>
@@ -120,10 +241,11 @@ function Popup(props) {
           )}
         </div>
 
-        <p className="report-issue tertiary-text small-text">
+        <p className="report-issue tertiary-text small-text" style={reportIssueStyles}>
           Does something look wrong?
           <button
             className="btn-report link tertiary-text small-text"
+            style={btnReport}
             onClick={() => {
               setMode(PopupMode.REPORT);
             }}
@@ -176,4 +298,3 @@ Popup.propTypes = {
 };
 
 export default Popup;
-
