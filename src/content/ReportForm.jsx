@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { AnalyticEvent } from "../constants";
+import { AnalyticEvent, ClosebtnIcon } from "../constants";
 import { sendAC } from "../helper";
 
 /**
@@ -160,6 +160,10 @@ function ReportForm(props) {
 
   const reportDoneBtn = {...submitBtn , ...reportDone}
 
+  const ClosebtnIconStyle = {
+    height : "14px"
+  }
+
   return (
     <section className="panel" id="popup" style={reportPopupStyles}>
       <header style={panelHeader} className={`panel-header${submitted ? " empty" : ""}`}>
@@ -183,7 +187,7 @@ function ReportForm(props) {
         <div className="actions" style={panelCloseDiv}>
           <button className="btn-icon close-button" style={backBtnStyle} onClick={props.onClose} type="button">
             {/* <i className="exp-ux-close exp-ux-small" /> */}
-            <span>{"X"}</span>
+            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle}/>
           </button>
         </div>
       </header>

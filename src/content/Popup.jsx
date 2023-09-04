@@ -7,7 +7,7 @@ import LoginForm from "./LoginForm";
 import ReportForm from "./ReportForm";
 import ProductMatch from "./ProductMatch";
 
-import { AnalyticEvent, CtaType, MessageType, NotificationType, PopupMode } from "../constants";
+import { AnalyticEvent, ClosebtnIcon, CtaType, ExpertVoiceIcon, MessageType, NotificationType, PopupMode } from "../constants";
 import { getEVHomeUrl, sendAC } from "../helper";
 
 /**
@@ -172,10 +172,21 @@ function Popup(props) {
     cursor : "pointer"
   };
 
+  const ExpertVoiceIconStyle = {
+    height : "20px",
+    width : "20px"
+  }
+
+  const ClosebtnIconStyle = {
+    height : "14px"
+  }
+
+
   return (
     <section className="panel" id="popup" style={popupStyle}>
       <header className="panel-header" style={panelHeaderStyle}>
-        <i className="exp-ux-bolt exp-ux-small ev-logo" />
+        {/* <i className="exp-ux-bolt exp-ux-small ev-logo" /> */}
+        <img src={ExpertVoiceIcon} alt="" style={ExpertVoiceIconStyle}/>
         <span className="title-text" style={titleText}>
           Tips
         </span>
@@ -188,7 +199,7 @@ function Popup(props) {
         <div className="actions" style={actionStyle}>
           <button className="btn-icon close-button" style={closeBtnStyles} onClick={props.onClose} type="button">
             {/* <i className="exp-ux-close exp-ux-small" /> */}
-            <span style={closeIcon}>X</span>
+            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle}/>
           </button>
         </div>
       </header>

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { AnalyticEvent, MessageType } from "../constants";
+import { AnalyticEvent, ClosebtnIcon, MessageType } from "../constants";
 import { sendAC } from "../helper";
 import { ErrorAlert } from "../components/Alert";
 
@@ -169,6 +169,11 @@ function LoginForm(props) {
     color: "rgb(117, 117, 117)",
   };
 
+  const ClosebtnIconStyle = {
+    height : "14px"
+  }
+
+
   return (
     <section className="panel" id="popup" style={popupStyles} >
       <header className="panel-header" style={panelHeaderStyles}>
@@ -192,7 +197,7 @@ function LoginForm(props) {
         <div className="actions" style={panelActionsStyles}>
           <button className="btn-icon close-button" style={closeBtnStyles} onClick={props.onClose} type="button">
             {/* <i className="exp-ux-close exp-ux-small" /> */}
-            <span style={closeIconStyles}>X</span>
+            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle}/>
           </button>
         </div>
       </header>

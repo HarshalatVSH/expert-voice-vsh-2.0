@@ -1,7 +1,9 @@
+/* eslint-disable  */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Alert.less';
+import { ClosebtnIcon } from '../constants';
 
 /**
  * Alert Component
@@ -9,6 +11,10 @@ import './Alert.less';
  * @author jon.morris
  */
 function Alert(props) {
+  const ClosebtnIconStyle = {
+    height : "14px"
+  }
+
   return (
     <div className={`alert alert-${props.type}${props.className ? ` ${props.className}` : ''}`}>
       {props.icon ? (
@@ -29,6 +35,7 @@ function Alert(props) {
             type="button"
           >
             <i className="exp-ux-close exp-ux-small" />
+            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle}/>
           </button>
         </div>
       ) : null}

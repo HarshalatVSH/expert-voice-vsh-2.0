@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { AnalyticEvent, CtaType, MessageType } from "../constants";
 import { formatInteger, formatPrice, getInlineVariant, getProductUrls, getRoundedStar, isComparablePrice, sendAC } from "../helper";
-
+import { ImageUrlBase , StarIcon } from "../constants";
 /**
  * Main Inline Script - rendering inline best price label
  */
@@ -26,7 +26,8 @@ function Inline() {
     color: "rgb(255, 255, 255)",
     borderRadius: "6px",
     fontWeight: "bold",
-    cursor : "pointer"
+    cursor : "pointer",
+    border : "medium"
   };
 
   const inlineStyle = {
@@ -87,6 +88,18 @@ function Inline() {
     border: 'none',
     cursor : "pointer"
   };
+
+  const ImageUrlBaseStyle = {
+    marginRight: "12px",
+    height : "20px",
+    width : "20px"
+  }
+
+  const StarIconStyle = {
+    marginRight: "4px",
+    height : "25px",
+    width : "20px"
+  }
   
   useEffect(() => {
     // Bind the message listener to respond to the background worker
@@ -130,7 +143,8 @@ function Inline() {
       return (
         <a className="review-summary" style={reviewSummary} href={productUrls.reviews} onClick={sendCtaClickEvent(CtaType.PDP_REVIEWS, "review-summary")} rel="noopener noreferrer" target="_blank">
           <div className="average-stars type-title" style={averageStars}> 
-            <i className="exp-ux-starFilled exp-ux-small" />
+            {/* <i className="exp-ux-starFilled exp-ux-small" /> */}
+            <img src= {StarIcon} alt="" style={StarIconStyle}/>
             {roundedStars}
           </div>
 
@@ -167,7 +181,8 @@ function Inline() {
           }}
           type="button"
         >
-          <i className="exp-ux-bolt exp-ux-small" />
+          {/* <i className="exp-ux-bolt exp-ux-small" /> */}
+          <img src={ImageUrlBase} alt="" style={ImageUrlBaseStyle}/>
           Sign in for discounts
         </button>
       ) : evIsCheaper === false ? (

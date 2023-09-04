@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { CtaType } from "../constants";
+import { CtaType, StarIcon } from "../constants";
 import { formatInteger, formatPrice, formatProductName, getBrandUrls, getProductUrls, getRoundedStar, isComparablePrice } from "../helper";
 
 function ProductMatch(props) {
@@ -108,6 +108,12 @@ function ProductMatch(props) {
     fontSize: "12px"
   }
 
+  const StarIconStyle = {
+    marginRight: "4px",
+    height : "25px",
+    width : "20px"
+  }
+
   const renderReviewSummary = () => {
     if (!props.product.reviewCount) return null;
 
@@ -115,7 +121,8 @@ function ProductMatch(props) {
     return (
       <div className="review-summary" style={reviewSummaryStyles}>
         <a className="average-stars type-title" style={averageStarsStyles} href={productUrls.reviews} onClick={props.sendCtaClickEvent(CtaType.PDP_REVIEWS, "review-stars")} rel="noopener noreferrer" target="_blank">
-          <i className="exp-ux-starFilled exp-ux-small" />
+          {/* <i className="exp-ux-starFilled exp-ux-small" /> */}
+          <img src={StarIcon} alt="" style={StarIconStyle} />
           {roundedStars}
         </a>
         <a className="tertiary-text small-text link" style={smallTextStyles} href={productUrls.reviews} onClick={props.sendCtaClickEvent(CtaType.PDP_REVIEWS, "review-count")} rel="noopener noreferrer" target="_blank">
