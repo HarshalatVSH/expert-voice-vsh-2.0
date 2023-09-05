@@ -213,15 +213,15 @@ function ProductMatch(props) {
           // EV offers lower or equal price
           <>
             <div className="status-indicator">
-              <a className="pill pill-success" href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP, "pill")} rel="noopener noreferrer" target="_blank">
+              <a className="pill pill-success" style={pillsSuccessStyle} href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP, "pill")} rel="noopener noreferrer" target="_blank">
                 {`Lowest price ${formattedBestPrice}`}
               </a>
             </div>
 
             {renderReviewSummary()}
 
-            <p className="subtext secondary-text small-text">Don’t miss out on your expert discount.</p>
-            <a className="btn btn-primary product-link" href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
+            <p className="subtext secondary-text small-text" style={unlockTextStyle}>Don’t miss out on your expert discount.</p>
+            <a className="btn btn-primary product-link" style={productLink} href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
               Buy on ExpertVoice
             </a>
           </>

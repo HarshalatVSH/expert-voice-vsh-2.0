@@ -134,7 +134,8 @@ function Popup(props) {
     padding: "12px",
     textAlign: "center",
     width: "100%",
-    cursor : "pointer"
+    cursor : "pointer",
+    border: "medium"
   };
 
   const tertiaryTextStyles = {

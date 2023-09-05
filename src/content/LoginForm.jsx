@@ -127,7 +127,8 @@ function LoginForm(props) {
     width: "100%",
     color: "rgb(255, 255, 255)",
     cursor: "default",
-    background: isDisabled ? "rgb(252, 191, 189)" : "rgb(252, 69, 64)",
+    background: isDisabled ? "rgb(252, 191, 189)" : "rgb(252,26,26)",
+    border: "medium",
   };
 
   const passwordDivStyles = {

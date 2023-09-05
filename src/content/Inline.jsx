@@ -201,7 +201,8 @@ function Inline() {
       ) : (
         // EV offers some discount for product
         <a className="btn btn-primary" style={DiscountsBtn} href={productUrls.pdp} onClick={sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
-          <i className="exp-ux-bolt exp-ux-small" />
+          {/* <i className="exp-ux-bolt exp-ux-small" /> */}
+          <img src={ImageUrlBase} alt="" style={ImageUrlBaseStyle}/>
           {evIsCheaper ? `Buy for ${formattedBestPrice}` : context.brand.discount > 0 ? `Up to ${context.brand.discount}% off` : "Discounts Available"}
         </a>
       )}
