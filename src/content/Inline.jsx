@@ -204,13 +204,15 @@ function Inline() {
       ) : evIsCheaper === false ? (
         // No savings available
         <a className="btn btn-gray" style={{ background: "red" }} href={productUrls.pdp} onClick={sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
-          <i className="exp-ux-bolt exp-ux-small" />
+          {/* <i className="exp-ux-bolt exp-ux-small" /> */}
+          <img src={ImageUrlBase} alt="" style={ImageUrlBaseStyle}/>
           No savings
         </a>
       ) : !context.product.inStock && context.product.accessConfirmed ? (
         // Product is out of stock on EV
         <a className="btn btn-gray" style={{ background: "red" }} href={productUrls.pdp} onClick={sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
-          <i className="exp-ux-bolt exp-ux-small" />
+          {/* <i className="exp-ux-bolt exp-ux-small" /> */}
+          <img src={ImageUrlBase} alt="" style={ImageUrlBaseStyle}/>
           {evIsCheaper ? <span className="best-price-unavailable">{formattedBestPrice}</span> : null}
           Out of Stock
         </a>

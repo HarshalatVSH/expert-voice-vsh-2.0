@@ -146,7 +146,7 @@ function LoginForm(props) {
     padding: "16px 12px 14px",
     width: "90%",
     position: "relative",
-    marginBottom: "24px",
+    marginBottom: "2px",
   };
   
   const passwordLabelStyles = {
@@ -250,7 +250,7 @@ function LoginForm(props) {
             />
             <label htmlFor="identifier" style={userNameLabelStyles}>Email or Username</label>
 
-            {!identifier && interactions.identifier ? <div style={{color : "red"}} className="form-helper guidance warning">You must provide an email or username to sign in.</div> : null}
+            {!identifier && interactions.identifier ? <div style={{color : "red" , fontSize : "13px" }} className="form-helper guidance warning">You must provide an email or username to sign in.</div> : null}
           </div>
           <div className="form-control" style={formDivStyles}>
             <input
@@ -269,7 +269,7 @@ function LoginForm(props) {
             />
             <label htmlFor="password" style={passwordLabelStyles}>Password</label>
 
-            {!password && interactions.password ? <div style={{color : "red"}}  className="form-helper guidance warning">You must provide your password to sign in.</div> : null}
+            {!password && interactions.password ? <div style={{color : "red" , fontSize : "13px"}}  className="form-helper guidance warning">You must provide your password to sign in.</div> : null}
           </div>
 
           <button className="btn btn-primary btn-report-submit" style={btnDisableStyles} disabled={!identifier || !password} type="submit">
