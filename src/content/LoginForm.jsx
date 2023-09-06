@@ -6,6 +6,7 @@ import { AnalyticEvent, BackbtnIcon, ClosebtnIcon, MessageType } from "../consta
 import { sendAC } from "../helper";
 import { ErrorAlert } from "../components/Alert";
 
+
 const Errors = {
   "signIn.invalid": "Oops. this account information was not recognized.",
   "signIn.locked": "Looks like it's time to change your password. Give it a quick update and try logging in again.",
@@ -127,7 +128,7 @@ function LoginForm(props) {
     width: "100%",
     color: "rgb(255, 255, 255)",
     cursor: "default",
-    background: isDisabled ? "rgb(252, 191, 189)" : "rgb(252,26,26)",
+    background: isDisabled ? "rgb(252, 191, 189)" : "rgb(252, 69, 64)",
     border: "medium",
   };
 
@@ -251,7 +252,7 @@ function LoginForm(props) {
 
             {!identifier && interactions.identifier ? <div style={{color : "red"}} className="form-helper guidance warning">You must provide an email or username to sign in.</div> : null}
           </div>
-          <div className="form-control">
+          <div className="form-control" style={formDivStyles}>
             <input
               id="password"
               name="password"

@@ -43,10 +43,6 @@ export const AUTH_COOKIE = "__at"; // also __at2 with auth2 & gateway2
 export const AUTH_DOMAIN = "https://www.expertvoice.com";
 
 export const isAuthCookie = (c) => AUTH_DOMAIN.includes(c?.domain) && c?.name?.startsWith(AUTH_COOKIE);
-// export const getAuthCookie = async () => {
-//   const cookies = await browser.cookies.getAll({ url: AUTH_DOMAIN });
-//   return cookies.find((c) => isAuthCookie(c));
-// };
 
 export function getAuthCookie() {
   return new Promise(function (resolve, reject) {
@@ -66,12 +62,6 @@ export const isAuthenticated = async () => {
 // ----------------------------------
 // Cache Helpers
 // ----------------------------------
-// export const getFromCache = async (key, { ttl } = {}) => {
-//   const entries = await browser.storage.local.get([key]);
-//   const entry = entries?.[key];
-//   return entry?.created && entry?.value
-//     && (!ttl || entry.created + ttl > Date.now()) ? entry.value : null;
-// };
 
 export const getFromCache = async (key, { ttl } = {}) => {
   return new Promise((resolve, reject) => {

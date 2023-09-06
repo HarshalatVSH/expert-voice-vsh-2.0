@@ -122,7 +122,7 @@ function ReportForm(props) {
   };
 
   const submit = {
-    background: !issue ? 'rgb(252, 191, 189)' : 'rgb(255, 26, 26)',
+    background: !issue ? 'rgb(252, 191, 189)' : 'rgb(252, 69, 64)',
     cursor: !issue ? 'default' : 'pointer',
     color: "rgb(255, 255, 255)",
     border : "medium"

@@ -50,14 +50,14 @@ function Popup(props) {
 
   const sendCtaClickEvent =
     (type = CtaType.BRAND, source = "button") =>
-    () => {
-      sendAC(AnalyticEvent.CTA_CLICK, {
-        brand: props.brand || null,
-        product: props.product || null,
-        source,
-        type,
-      });
-    };
+      () => {
+        sendAC(AnalyticEvent.CTA_CLICK, {
+          brand: props.brand || null,
+          product: props.product || null,
+          source,
+          type,
+        });
+      };
 
   const popupStyle = {
     backgroundColor: "rgb(255, 255, 255)",
@@ -124,7 +124,7 @@ function Popup(props) {
 
   const btnLoginStyles = {
     margin: "12px 0px",
-    background: "rgb(255, 26, 26)",
+    background: "rgb(252, 69, 64)",
     color: "rgb(255, 255, 255)",
     borderRadius: "8px",
     display: "block",
@@ -134,7 +134,7 @@ function Popup(props) {
     padding: "12px",
     textAlign: "center",
     width: "100%",
-    cursor : "pointer",
+    cursor: "pointer",
     border: "medium"
   };
 
@@ -161,32 +161,67 @@ function Popup(props) {
     color: "rgb(117, 117, 117)",
     background: "none",
     border: "none",
-    cursor : "pointer"
+    cursor: "pointer"
   };
 
-  const signOutBtn = { 
-    background: "none", 
-    border: "medium", 
-    textDecoration: "underline" ,
+  const signOutBtn = {
+    background: "none",
+    border: "medium",
+    textDecoration: "underline",
     color: "rgb(117, 117, 117)",
-    cursor : "pointer"
+    cursor: "pointer"
   };
 
   const ExpertVoiceIconStyle = {
-    height : "20px",
-    width : "20px"
+    height: "20px",
+    width: "20px"
   }
 
   const ClosebtnIconStyle = {
-    height : "14px"
+    height: "14px"
   }
 
+  const typetitle = {
+    fontSize: "18px",
+    fontWeight: "bold",
+    lineHeight: "24px"
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const subtextStyle = {
+    marginTop: "18px",
+    color: "rgb(117, 117, 117)",
+    fontSize: "13px",
+    fontWeight: 600,
+    lineHeight: "18px",
+  }
+
+  const samplepanelStyle = {
+    backgroundColor: "lightGray",
+    borderRadius: "3px",
+    margin: "24px 0",
+    padding: "12px"
+  }
+
+  const smallTextStyle = {
+    fontSize: "13px",
+    fontWeight: 600,
+    lineHeight: "18px",
+  }
+
+  const tertiSmallLinkStyle = {
+    lineHeight: "19px",
+    fontSize: "13px",
+    fontWeight: 600,
+    lineHeight: "18px",
+    color: "lightGray",
+    textDecoration: "underline"
+  }
 
   return (
     <section className="panel" id="popup" style={popupStyle}>
       <header className="panel-header" style={panelHeaderStyle}>
         {/* <i className="exp-ux-bolt exp-ux-small ev-logo" /> */}
-        <img src={ExpertVoiceIcon} alt="" style={ExpertVoiceIconStyle}/>
+        <img src={ExpertVoiceIcon} alt="" style={ExpertVoiceIconStyle} />
         <span className="title-text" style={titleText}>
           Tips
         </span>
@@ -199,7 +234,7 @@ function Popup(props) {
         <div className="actions" style={actionStyle}>
           <button className="btn-icon close-button" style={closeBtnStyles} onClick={props.onClose} type="button">
             {/* <i className="exp-ux-close exp-ux-small" /> */}
-            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle}/>
+            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle} />
           </button>
         </div>
       </header>
@@ -211,18 +246,18 @@ function Popup(props) {
           <BrandMatch brand={props.brand} sendCtaClickEvent={sendCtaClickEvent} user={props.user} />
         ) : (
           <>
-            <h1 className="type-title">No tips for this page</h1>
-            <p className="subtext tertiary-text small-text">As you browse Amazon.com, we&apos;ll automatically look for brands that may offer you exclusive discounts on ExpertVoice.</p>
-            <div className="sample-panel">
-              <img alt="Example" className="sample-image" src={browser.runtime.getURL("assets/images/preview.png")} />
-              <p className="small-text">An alert will let you know when there may be a relevant offer on ExpertVoice.</p>
+            <h1 className="type-title" style={typetitle} >No tips for this page</h1>
+            <p className="subtext tertiary-text small-text" style={subtextStyle}>As you browse Amazon.com, we&apos;ll automatically look for brands that may offer you exclusive discounts on ExpertVoice.</p>
+            <div className="sample-panel" style={samplepanelStyle}>
+              <img alt="Example" className="sample-image" style={{marginBottom : "12px"}} src={browser.runtime.getURL("assets/images/preview.png")} />
+              <p className="small-text" style={smallTextStyle}>An alert will let you know when there may be a relevant offer on ExpertVoice.</p>
             </div>
           </>
         )}
 
         <div className="learn-more">
           {props.user ? (
-            <p className="tertiary-text small-text" style={{color: "rgb(117, 117, 117)"}}>
+            <p className="tertiary-text small-text" style={{ color: "rgb(117, 117, 117)" }}>
               Signed in as {props.user.firstName} {props.user.lastName}.
               <button style={signOutBtn} className="btn-logout link tertiary-text small-text" onClick={props.onLogout} type="button">
                 Sign out
@@ -230,7 +265,7 @@ function Popup(props) {
             </p>
           ) : (
             <>
-              {!props.brand ? <p className="tertiary-text small-text">Sign in to ExpertVoice to get more accurate tips.</p> : null}
+              {!props.brand ? <p className="tertiary-text small-text" style={tertiSmallLinkStyle} >Sign in to ExpertVoice to get more accurate tips.</p> : null}
               <button
                 className="btn btn-primary btn-login"
                 onClick={() => {

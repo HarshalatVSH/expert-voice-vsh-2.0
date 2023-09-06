@@ -18,17 +18,6 @@ function Content() {
       // No page data, nothing to do
       return;
     }
-    const params = {
-      brandText: "Visit the Klymit Store",
-      identifier: "b07yp8mlnn",
-      itemName: "Klymit Static V Inflatable Sleeping Pad for Camping, Lightweight Hiking and Backpacking Air Bed Green-2020",
-      model: "06svgr02c",
-      searchTerm: "klymit+static+v+inflatable+sleeping+pad+for+camping",
-      price: "48.74",
-      primaryBrandText: "klymit",
-      primaryMfgText: "klymit",
-      source: "amazon",
-    };
     // Bind the message listener to respond to the background worker
     const res = await fetch(`https://www.expertvoice.com/xapi/browser-support/pub/1.0/search`, {
       method: "POST",

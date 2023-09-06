@@ -42,7 +42,7 @@ function Overlay() {
     textDecoration: 'none',
     cursor: 'pointer',
     margin: '0px',
-    background: 'rgb(255, 26, 26)',
+    background: 'rgb(252, 69, 64)',
   };
 
   const ImageUrlBaseStyle = {

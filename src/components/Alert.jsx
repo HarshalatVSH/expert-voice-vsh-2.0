@@ -10,32 +10,64 @@ import { ClosebtnIcon } from '../constants';
  *
  * @author jon.morris
  */
+
+const alertStyle = {
+  alignItems: "center",
+  borderRadius: "3px",
+  display: "flex",
+  padding: "10px 12px"
+}
+
+const alertbeforeStyle = {
+  alignItems: "center",
+  color: "white",
+  display: "flex",
+  flex: "0 0 auto",
+  justifyContent: "center"
+}
+
+const alertContentStyle = {
+  flex: "1 1 auto",
+  fontWeight: "bold"
+}
+
+const alertAfterStyle = {
+  marginLeft: "12px"
+}
+
+const buttonStyle = {
+  color: "rgb(117, 117, 117)",
+  background: "none",
+  border: "medium"
+}
+
 function Alert(props) {
   const ClosebtnIconStyle = {
-    height : "14px"
+    height: "14px"
   }
 
   return (
-    <div className={`alert alert-${props.type}${props.className ? ` ${props.className}` : ''}`}>
+    <div className={`alert alert-${props.type}${props.className ? ` ${props.className}` : ''}`} style={alertStyle}>
       {props.icon ? (
-        <div className="alert-before">
+        <div className="alert-before" style={alertbeforeStyle}>
           <i className={`exp-ux-${props.icon} exp-ux-${props.iconSize}`} />
         </div>
       ) : null}
 
-      <div className="alert-content">
+      <div className="alert-content" style={alertContentStyle}>
         {props.children}
       </div>
 
       {props.onClose ? (
-        <div className="alert-after">
+        <div className="alert-after" style={alertAfterStyle}>
           <button
             className="btn-icon close-button"
             onClick={(e) => props.onClose?.(e)}
             type="button"
+            style={buttonStyle}
           >
-            <i className="exp-ux-close exp-ux-small" />
-            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle}/>
+            {/* <i className="exp-ux-close exp-ux-small" /> */}
+            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle} />
           </button>
         </div>
       ) : null}

@@ -52,7 +52,7 @@ function BrandMatch(props) {
 
   const viewAllBtn = {
     margin: "12px 0px",
-    background: "rgb(255, 26, 26)",
+    background: "rgb(252, 69, 64)",
     color: "rgb(255, 255, 255)",
     borderRadius: "8px",
     display: "block",
@@ -65,16 +65,48 @@ function BrandMatch(props) {
     textDecoration : "none"
   };
 
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  const subtextStyles = {
+    marginTop: "18px",
+    color: "darkGray",
+    fontSize: "12px"
+  }
+
+  const btnbrandLinkStyles = {
+    border: 'none',
+    cursor: 'pointer',
+    margin: '0px',
+    outline: 'none',
+    padding: '0px',
+    textDecoration: 'none',
+    background: "rgb(252, 69, 64)",
+    color: "rgb(255, 255, 255)",
+    margin:" 18px 0"
+  };
+
+  const pillStyle = {
+    bordradius: "30px",
+    fontWeight: "bold",
+    padding: "3px 16px",
+  }
+
+  const pillOutline = {
+    border: "1px solid lightGray",
+    color: "lightGray"
+  }
+
+  const pillOutlineStyle = {...pillStyle, ...pillOutline}
+
   return (
     <>
       <div className="match-details" style={matchDetailsStyles}>
         {props.brand.avatar ? (
           <a style={headerAnchorStyle} href={cta} onClick={props.sendCtaClickEvent(ctaType, "image")} rel="noopener noreferrer" target="_blank">
-            <img alt={props.brand.name} className="match-image" src={`${props.brand.avatar}${props.brand.avatar.includes("?") ? "&" : "?"}s=96x96`} style={{ height: "48px", width: "48px", imgStyle }} />
+            <img alt={props.brand.name} className="match-image" style={{ height: "48px", width: "48px", imgStyle }} src={`${props.brand.avatar}${props.brand.avatar.includes("?") ? "&" : "?"}s=96x96`}  />
           </a>
         ) : null}
         <h1 className="type-title match-name" style={titleStyle}>
-          <a href={cta} onClick={props.sendCtaClickEvent(ctaType, "name")} rel="noopener noreferrer" target="_blank" style={headerAnchorStyle}>
+          <a  style={headerAnchorStyle} href={cta} onClick={props.sendCtaClickEvent(ctaType, "name")} rel="noopener noreferrer" target="_blank" >
             {props.brand.name}
           </a>
         </h1>
@@ -91,10 +123,10 @@ function BrandMatch(props) {
                   {props.brand.discount > 0 ? `Up to ${props.brand.discount}% off` : "Discounts Available"}
                 </a>
               </div>
-              <p className="subtext secondary-text small-text">
+              <p className="subtext secondary-text small-text" style={subtextStyles}>
                 Don&apos;t miss out on exclusive discounts from <span className="brand-name">{props.brand.name}</span> on ExpertVoice.
               </p>
-              <a className="btn btn-primary brand-link" href={cta} onClick={props.sendCtaClickEvent(ctaType)} rel="noopener noreferrer" target="_blank">
+              <a className="btn btn-primary brand-link" style={btnbrandLinkStyles} href={cta} onClick={props.sendCtaClickEvent(ctaType)} rel="noopener noreferrer" target="_blank">
                 View discounts
               </a>
             </>
@@ -106,7 +138,7 @@ function BrandMatch(props) {
                   Insider Access
                 </a>
               </div>
-              <p className="subtext secondary-text small-text">
+              <p className="subtext secondary-text small-text" style={subtextStyles}>
                 You have exclusive access to content from <span className="brand-name">{props.brand.name}</span> that may include opportunities to preview or sample new products, provide feedback to their team, and much more.
               </p>
               <a className="btn btn-primary brand-link" style={viewAllBtn} href={cta} onClick={props.sendCtaClickEvent(ctaType)} rel="noopener noreferrer" target="_blank">
@@ -123,26 +155,26 @@ function BrandMatch(props) {
               Found on ExpertVoice
             </a>
           </div>
-          <p className="subtext secondary-text small-text">Sign in to find out if you qualify for discounts, education, or other exclusive offers.</p>
+          <p className="subtext secondary-text small-text" style={subtextStyles}>Sign in to find out if you qualify for discounts, education, or other exclusive offers.</p>
         </>
       ) : (
         // The brand was found, but it's either inactive or not targeting the user
         <>
           <div className="status-indicator">
-            <span className="pill pill-outline">Not Available</span>
+            <span className="pill pill-outline" style={pillOutlineStyle}>Not Available</span>
           </div>
 
           {props.user ? (
             <>
-              <p className="subtext secondary-text small-text">
+              <p className="subtext secondary-text small-text" style={subtextStyles}>
                 <span className="brand-name">{props.brand.name}</span> is not available to you on ExpertVoice.
               </p>
-              <a className="btn btn-outline brand-link" href={getEVBrandsUrl()} onClick={props.sendCtaClickEvent(CtaType.EV_BRANDS)} rel="noopener noreferrer" target="_blank">
+              <a className="btn btn-outline brand-link" style={btnbrandLinkStyles} href={getEVBrandsUrl()} onClick={props.sendCtaClickEvent(CtaType.EV_BRANDS)} rel="noopener noreferrer" target="_blank">
                 View brands I have access to
               </a>
             </>
           ) : (
-            <p className="subtext secondary-text small-text">
+            <p className="subtext secondary-text small-text" style={subtextStyles}>
               <span className="brand-name">{props.brand.name}</span> is not available on ExpertVoice. Sign in to see the brands you have access to.
             </p>
           )}

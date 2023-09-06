@@ -1,5 +1,4 @@
 {
-  "key": "evshopplugininternal",
   "manifest_version": 2,
   "name": "ExpertVoice Deal Alert",
   "description": "Don't miss out on your expert pricing.",
@@ -14,7 +13,6 @@
     "cookies",
     "storage",
     "tabs",
-    "browserAction",
     "*://*.expertvoice.com/"
   ],
   "browser_action": {},
@@ -47,6 +45,5 @@
       "worker.min.js"
     ],
     "persistent": false
-  },
-  "content_security_policy": "default-src 'self' https://www.expertvoice.com"
+  }
 }

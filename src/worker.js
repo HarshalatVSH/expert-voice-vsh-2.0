@@ -42,71 +42,6 @@ const loadUser = () =>
     { ttl: 86400000 }
   ); // 1 day
 
-// const loadContext = async (params = {}) => {
-//   try {
-//     const res = await fetch(`${UrlBase}/xapi/browser-support/pub/1.0/search`, {
-//       method: "POST",
-
-//       body: JSON.stringify({
-//         ...params,
-//         maxResults: 1,
-//       }),
-//       credentials: "include",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     // const data = await res.json();
-//     const data = {
-//       brands: [
-//         {
-//           orgId: 139576,
-//           text: "Klymit",
-//           score: 15,
-//           exactMatch: true,
-//           orgKey: "klymit",
-//           url: "/brand/klymit",
-//           accessType: null,
-//           avatarUrl: "/xapi/xds/ext/gimg/ee9afa6cfb1f4683/1692691833/brandAvatar.png",
-//           active: true,
-//           discount: -1,
-//         },
-//       ],
-//       products: [
-//         {
-//           orgId: 139576,
-//           text: "Static V Sleeping Pad",
-//           score: 1.0,
-//           exactMatch: true,
-//           productCode: "Static-V",
-//           imageUrl: "https://cdn.expertvoice.com/io/client/mfg/klymit/images/product/src/sc.400.400.bf/Klymit_StaticV_Front_Deep_StuffSack_v1.jpg",
-//           pdpUrl: "/product/klymit-static-v-sleeping-pad/139576?p=Static-V",
-//           price: 0.0,
-//           msrp: 0.0,
-//           bestPrice: 0.0,
-//           discountPct: 0.0,
-//           reviewStars: 4.53,
-//           reviewRating: 8.92,
-//           reviewCount: 324,
-//           inStock: false,
-//           currencyCode: "N/A",
-//           accessConfirmed: false,
-//         },
-//       ],
-//     };
-
-//     return {
-//       brand,
-//       page: params,
-//       product,
-//     };
-//   } catch (ex) {
-//     // ignore
-//   }
-
-//   return null;
-// };
-
 const loadContext =  (data) => {
   try {
     let [brand] = data.brands || [];
@@ -225,7 +160,6 @@ const triggerSync = async (tabId, user, sendResponse) => {
 browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   switch (msg.type || "") {
     case MessageType.AC:
-      // sendEvent(msg.action, msg.data);
       if(msg.data){
         event(msg.action, msg.data);
       }
@@ -243,16 +177,6 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           user,
         });
       });
-      // Promise.all([loadContext(msg.data), loadUser()]).then(([context, user]) => {
-      //   // Sync the badge with the brand results
-      //   syncBadge(sender.tab.id, context, user);
-      //   syncContext(sender.tab.id, context, user);
-
-      //   sendResponse({
-      //     ...context,
-      //     user,
-      //   });
-      // });
       break;
     case MessageType.LOGIN:
       fetch(`${UrlBase}/sign-on/service/sign-in`, {

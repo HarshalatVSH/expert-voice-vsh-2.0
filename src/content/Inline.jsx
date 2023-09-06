@@ -22,7 +22,7 @@ function Inline() {
     lineHeight: "14px",
     padding: "0 18px 0 12px",
     width: "unset",
-    background: "rgb(255, 26, 26)",
+    background: "rgb(252, 69, 64)",
     color: "rgb(255, 255, 255)",
     borderRadius: "6px",
     fontWeight: "bold",
@@ -76,7 +76,7 @@ function Inline() {
     lineHeight: '14px',
     padding: '0px 18px 0px 12px',
     width: 'unset',
-    background: "rgb(255, 26, 26)",
+    background: "rgb(252, 69, 64)",
     color: 'rgb(255, 255, 255)',
     borderRadius: '3px',
     fontFamily: 'inherit',
@@ -100,7 +100,23 @@ function Inline() {
     height : "25px",
     width : "20px"
   }
+////////////////////////////////////////////////////////////////////////////////////////////
+  const reviewPrompt = {
+    color: "lightGray",
+    marginRight:" 8px"
+  }
   
+  const reviewPromptSumm = {...reviewSummary, ...reviewPrompt}
+
+  const tertiSmallLinkStyle = {
+    lineHeight: "19px",
+    fontSize: "13px",
+    fontWeight: 600,
+    lineHeight: "18px",
+    color: "lightGray",
+    textDecoration: "underline"
+  }
+
   useEffect(() => {
     // Bind the message listener to respond to the background worker
     const listener = (msg) => {
@@ -154,9 +170,9 @@ function Inline() {
     }
     if (user) {
       return (
-        <a className="review-summary review-prompt" href={productUrls.reviewPrompt} onClick={sendCtaClickEvent(CtaType.PDP_REVIEW_PROMPT, "review-prompt")} rel="noopener noreferrer" target="_blank">
+        <a className="review-summary review-prompt" style={reviewPromptSumm} href={productUrls.reviewPrompt} onClick={sendCtaClickEvent(CtaType.PDP_REVIEW_PROMPT, "review-prompt")} rel="noopener noreferrer" target="_blank">
           <i className="exp-ux-starFilled exp-ux-small" />
-          <span className="tertiary-text small-text link">Leave an expert review</span>
+          <span className="tertiary-text small-text link" style={tertiSmallLinkStyle}>Leave an expert review</span>
         </a>
       );
     }
@@ -193,7 +209,7 @@ function Inline() {
         </a>
       ) : !context.product.inStock && context.product.accessConfirmed ? (
         // Product is out of stock on EV
-        <a className="btn btn-gray" href={productUrls.pdp} onClick={sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
+        <a className="btn btn-gray" style={{ background: "red" }} href={productUrls.pdp} onClick={sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
           <i className="exp-ux-bolt exp-ux-small" />
           {evIsCheaper ? <span className="best-price-unavailable">{formattedBestPrice}</span> : null}
           Out of Stock

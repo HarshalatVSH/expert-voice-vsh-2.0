@@ -14,7 +14,6 @@ function ProductMatch(props) {
 
   const productName = formatProductName(props.product.name);
 
-
   const titleStyle = {
     fontSize: "18px",
     fontWeight: 600,
@@ -51,7 +50,7 @@ function ProductMatch(props) {
     display: "flex",
     justifyContent: "center",
   };
-  
+
   const averageStarsStyles = {
     alignItems: "center",
     display: "inline-flex",
@@ -60,7 +59,7 @@ function ProductMatch(props) {
     fontWeight: 600,
     lineHeight: "24px",
     textDecoration: "none",
-    color : "black"
+    color: "black"
   };
 
   const smallTextStyles = {
@@ -84,14 +83,14 @@ function ProductMatch(props) {
     fontWeight: 600,
     padding: '3px 16px',
     backgroundColor: 'rgb(82, 179, 130)',
-    color : "black",
-    textDecoration : "none"
+    color: "black",
+    textDecoration: "none"
   };
 
   const productLink = {
-    background: "rgb(255, 26, 26)",
+    background: "rgb(252, 69, 64)",
     color: "rgb(255, 255, 255)",
-    textDecoration : "none",
+    textDecoration: "none",
     margin: '18px 0px',
     borderRadius: '3px',
     display: 'block',
@@ -110,8 +109,24 @@ function ProductMatch(props) {
 
   const StarIconStyle = {
     marginRight: "4px",
-    height : "25px",
-    width : "20px"
+    height: "25px",
+    width: "20px"
+  }
+
+  const btnStyle = {
+    borderRadius: "3px",
+    display: "block",
+    fontFamily: "inherit",
+    fontSize: "15px",
+    fontWeight: 600,
+    padding: "12px",
+    textAlign: "center",
+    width: "90%",
+    background: "rgb(252, 69, 64)",
+    border: "1px solid lightGray",
+    color: "lightGray",
+    margin: "18px 0",
+    margin: "6px 0 18px 0"
   }
 
   const renderReviewSummary = () => {
@@ -173,8 +188,8 @@ function ProductMatch(props) {
 
             {renderReviewSummary()}
 
-            <p className="subtext secondary-text small-text">No savings for this item, but you may qualify for great discounts on similar products.</p>
-            <a className="btn btn-primary product-link" href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
+            <p className="subtext secondary-text small-text" style={subtextStyles}>No savings for this item, but you may qualify for great discounts on similar products.</p>
+            <a className="btn btn-primary product-link" style={productLink} href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
               View on ExpertVoice
             </a>
           </>
@@ -182,7 +197,7 @@ function ProductMatch(props) {
           // Product is out of stock on EV
           <>
             <div className="status-indicator">
-              <a className="pill pill-secondary" href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP, "pill")} rel="noopener noreferrer" target="_blank">
+              <a className="pill pill-secondary" style={pillAnchorStyles} href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP, "pill")} rel="noopener noreferrer" target="_blank">
                 {evIsCheaper ? <span className="best-price-unavailable">{formattedBestPrice}</span> : null}
                 Out of Stock
               </a>
@@ -190,12 +205,12 @@ function ProductMatch(props) {
 
             {renderReviewSummary()}
 
-            <p className="subtext secondary-text small-text">Visit ExpertVoice to view details and sign up to get notified when it’s back in stock.</p>
-            <a className="btn btn-outline product-link" href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
+            <p className="subtext secondary-text small-text" style={subtextStyles}>Visit ExpertVoice to view details and sign up to get notified when it’s back in stock.</p>
+            <a className="btn btn-outline product-link" style={btnStyle} href={productUrls.pdp} onClick={props.sendCtaClickEvent(CtaType.PDP)} rel="noopener noreferrer" target="_blank">
               View on ExpertVoice
             </a>
 
-            <p className="subtext secondary-text small-text">
+            <p className="subtext secondary-text small-text" style={subtextStyles}>
               {props.brand.discount > 0 ? (
                 <>
                   Save up to <strong>{props.brand.discount}% off</strong>
@@ -205,7 +220,7 @@ function ProductMatch(props) {
               )}{" "}
               on other products
             </p>
-            <a className="btn btn-primary brand-products-link" href={brandUrls.plp} onClick={props.sendCtaClickEvent(CtaType.BRAND_PLP)} rel="noopener noreferrer" target="_blank">
+            <a className="btn btn-primary brand-products-link" style={btnStyle} href={brandUrls.plp} onClick={props.sendCtaClickEvent(CtaType.BRAND_PLP)} rel="noopener noreferrer" target="_blank">
               Shop more {props.brand.name}
             </a>
           </>
