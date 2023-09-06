@@ -48,7 +48,7 @@ function LoginForm(props) {
     marginRight: "6px",
     color: "rgb(117, 117, 117)",
     background: "none",
-    border : "medium"
+    border: "medium"
   };
 
   const backBtnStyles = {
@@ -73,7 +73,7 @@ function LoginForm(props) {
   const closeBtnStyles = {
     color: "rgb(117, 117, 117)",
     background: "none",
-    border : "medium"
+    border: "medium"
   }
 
   const closeIconStyles = {
@@ -81,13 +81,13 @@ function LoginForm(props) {
     top: "2px",
     fontSize: "18px",
   };
-  
+
 
   const panelBody = {
     padding: "18px",
     textAlign: "center"
   }
-  
+
   const formDivStyles = {
     position: "relative",
     marginBottom: "24px",
@@ -107,7 +107,7 @@ function LoginForm(props) {
     padding: "16px 12px 14px",
     width: "90%",
   };
-  
+
   const userNameLabelStyles = {
     display: "none",
     pointerEvents: "none",
@@ -148,7 +148,7 @@ function LoginForm(props) {
     position: "relative",
     marginBottom: "2px",
   };
-  
+
   const passwordLabelStyles = {
     display: "none",
     pointerEvents: "none",
@@ -162,7 +162,7 @@ function LoginForm(props) {
     fontWeight: 400,
     lineHeight: "18px",
     color: "rgb(117, 117, 117)",
-    width : "90%"
+    width: "90%"
   };
 
   const signUpLinkStyles = {
@@ -172,7 +172,7 @@ function LoginForm(props) {
   };
 
   const ClosebtnIconStyle = {
-    height : "14px"
+    height: "14px"
   }
 
   const BackbtnIconStyle = {
@@ -195,7 +195,7 @@ function LoginForm(props) {
               type="button"
             >
               {/* <i className="exp-ux-chevron exp-ux-medium" /> */}
-              <img src={BackbtnIcon} alt="" style={BackbtnIconStyle}/>
+              <img src={BackbtnIcon} alt="" style={BackbtnIconStyle} />
             </button>
             <span className="title-text" style={titleTextStyles}>Sign into ExpertVoice</span>
           </>
@@ -204,7 +204,7 @@ function LoginForm(props) {
         <div className="actions" style={panelActionsStyles}>
           <button className="btn-icon close-button" style={closeBtnStyles} onClick={props.onClose} type="button">
             {/* <i className="exp-ux-close exp-ux-small" /> */}
-            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle}/>
+            <img src={ClosebtnIcon} alt="" style={ClosebtnIconStyle} />
           </button>
         </div>
       </header>
@@ -217,19 +217,33 @@ function LoginForm(props) {
             setError(null);
             setSubmitting(true);
 
-            const res = await browser.runtime.sendMessage({ identifier, password, type: MessageType.LOGIN });
-            setSubmitting(false);
+            // const res = await browser.runtime.sendMessage({ identifier, password, type: MessageType.LOGIN });
+            fetch(`https://www.expertvoice.com/sign-on/service/sign-in`, {
+              method: "POST",
+              body: `identifier=${encodeURIComponent(identifier)}&password=${encodeURIComponent(password)}`,
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+            })
+              .then((res) => res.json())
+              .then((res) => {
+                // sendResponse(data);
+                console.log("res ", res)
+                setSubmitting(false);
 
-            if (res?.error) {
-              setError(res.error);
-              sendAC(AnalyticEvent.LOGIN_ERROR, { error: res.error });
-            } else {
-              props.onLogin(res.user);
-              sendAC(AnalyticEvent.LOGIN);
-            }
+                if (res?.error) {
+                  setError(res.error);
+                  sendAC(AnalyticEvent.LOGIN_ERROR, { error: res.error });
+                } else if (res?.user) {
+                  console.log(res, "response");
+                  props.onLogin(res.user);
+                  sendAC(AnalyticEvent.LOGIN);
+                }
+              });
           }}
         >
-          {error ? <ErrorAlert  style={{color : "red"}}  className="form-error">{Errors[error] || "Oops. Something went wrong. Please try again."}</ErrorAlert> : null}
+          {error ? <ErrorAlert style={{ color: "red" }} className="form-error">{Errors[error] || "Oops. Something went wrong. Please try again."}</ErrorAlert> : null}
 
           <div className="form-control" style={formDivStyles}>
             <input
@@ -250,7 +264,7 @@ function LoginForm(props) {
             />
             <label htmlFor="identifier" style={userNameLabelStyles}>Email or Username</label>
 
-            {!identifier && interactions.identifier ? <div style={{color : "red" , fontSize : "13px" }} className="form-helper guidance warning">You must provide an email or username to sign in.</div> : null}
+            {!identifier && interactions.identifier ? <div style={{ color: "red", fontSize: "13px" }} className="form-helper guidance warning">You must provide an email or username to sign in.</div> : null}
           </div>
           <div className="form-control" style={formDivStyles}>
             <input
@@ -269,7 +283,7 @@ function LoginForm(props) {
             />
             <label htmlFor="password" style={passwordLabelStyles}>Password</label>
 
-            {!password && interactions.password ? <div style={{color : "red" , fontSize : "13px"}}  className="form-helper guidance warning">You must provide your password to sign in.</div> : null}
+            {!password && interactions.password ? <div style={{ color: "red", fontSize: "13px" }} className="form-helper guidance warning">You must provide your password to sign in.</div> : null}
           </div>
 
           <button className="btn btn-primary btn-report-submit" style={btnDisableStyles} disabled={!identifier || !password} type="submit">
